@@ -52,4 +52,5 @@ private:
 	void InitLevelItems();
 	void OnLevelSelected(const FLevelData& Data);
 	USTUGameInstance* GetSTUGameInstance() const;
+	USTUGameInstance* STUGameInstance;
 };

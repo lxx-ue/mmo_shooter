@@ -21,6 +21,7 @@ public:
 	FName GetMenuLevelName() const { return MenuLevelName; }
 
 	void ToggleVolume();
+	int32 dem = 1;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -34,4 +35,5 @@ protected:
 
 private:
 	FLevelData StartupLevel;
+
 };

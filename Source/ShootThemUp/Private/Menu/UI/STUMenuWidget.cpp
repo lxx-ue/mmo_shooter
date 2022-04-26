@@ -28,7 +28,7 @@ void USTUMenuWidget::NativeOnInitialized()
 
 void USTUMenuWidget::InitLevelItems()
 {
-	const auto STUGameInstance = GetSTUGameInstance();
+	STUGameInstance = GetSTUGameInstance();
 	if (!STUGameInstance) return;
 	checkf(STUGameInstance->GetLevelsData().Num()!= 0, TEXT("Levels data must not be empty"));
 
@@ -58,7 +58,6 @@ void USTUMenuWidget::InitLevelItems()
 
 void USTUMenuWidget::OnLevelSelected(const FLevelData& Data)
 {
-	const auto STUGameInstance = GetSTUGameInstance();
 	if (!STUGameInstance) return;
 
 	STUGameInstance->SetStartupLevel(Data);
@@ -82,9 +81,9 @@ void USTUMenuWidget::OnStartGame()
 void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
 {
 	if (Animation != HideAnimation) return;
-	const auto STUGameInstance = GetSTUGameInstance();
 	if (!STUGameInstance) return;
 
+	STUGameInstance->dem = 2;
 	UGameplayStatics::OpenLevel(this, STUGameInstance->GetStartupLevel().LevelName);
 }
 

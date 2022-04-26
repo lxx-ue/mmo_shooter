@@ -10,6 +10,7 @@
 #include "Components/STURespawnComponent.h"
 #include "Components/STUWeaponComponent.h"
 #include "EngineUtils.h"
+#include "STUGameInstance.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModeBase, All, All);
 
@@ -20,7 +21,14 @@ ASTUGameModeBase::ASTUGameModeBase() {
     DefaultPawnClass = ASTUBaseCharacter::StaticClass();
     PlayerControllerClass = ASTUPlayerController::StaticClass();
     HUDClass = ASTUGameHUD::StaticClass();
-    //PlayerStateClass = ASTUPlayerState::StaticClass();
+    if (GetWorld())
+    {
+        const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+        const auto StartedLevel = STUGameInstance->GetStartupLevel();
+
+        UE_LOG(LogSTUGameModeBase, Error, TEXT("%s"), *StartedLevel.LevelDisplayName.ToString());
+        UE_LOG(LogSTUGameModeBase, Error, TEXT("%i"), STUGameInstance->dem);
+    }
 }
 
 void ASTUGameModeBase::StartPlay() 
@@ -32,6 +40,7 @@ void ASTUGameModeBase::StartPlay()
     StartRound();
 
     SetMatchState(ESTUMatchState::InProgress);
+
 }
 
 UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -188,7 +197,7 @@ void ASTUGameModeBase::RespawnRequest(AController* Controller)
 
 void ASTUGameModeBase::GameOver()
 {
-    UE_LOG(LogSTUGameModeBase, Display, TEXT("=====GEM OVER====="));
+    //UE_LOG(LogSTUGameModeBase, Display, TEXT("=====GAME OVER====="));
     LogPlayerInfo();
 
     for (auto Pawn : TActorRange<APawn>(GetWorld()))
