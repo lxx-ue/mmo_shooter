@@ -19,9 +19,13 @@ public:
 	void SetStartupLevel(const FLevelData& Data) { StartupLevel = Data; }
 	TArray<FLevelData> GetLevelsData() const { return LevelsData; }
 	FName GetMenuLevelName() const { return MenuLevelName; }
+	void SetRounds(int32 n) { Rounds = FMath::Clamp(n, 1, 10); }
+
+	UFUNCTION(BlueprintCallable, Category = "GameMode")
+	int32 GetRounds() const { return Rounds; }
 
 	void ToggleVolume();
-	int32 dem = 1;
+	int32 Rounds = 1;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Game")

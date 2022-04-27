@@ -27,13 +27,15 @@ ASTUGameModeBase::ASTUGameModeBase() {
         const auto StartedLevel = STUGameInstance->GetStartupLevel();
 
         UE_LOG(LogSTUGameModeBase, Error, TEXT("%s"), *StartedLevel.LevelDisplayName.ToString());
-        UE_LOG(LogSTUGameModeBase, Error, TEXT("%i"), STUGameInstance->dem);
+        //UE_LOG(LogSTUGameModeBase, Error, TEXT("%i"), STUGameInstance->dem);
     }
 }
 
 void ASTUGameModeBase::StartPlay() 
 {
     Super::StartPlay();
+    const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+    GameData.RoundsNum = STUGameInstance->GetRounds();
     SpawnBots();
     CreateTeamsInfo();
     CurrentRound = 1;

@@ -23,6 +23,15 @@ void USTUMenuWidget::NativeOnInitialized()
 	{
 		QuitGameButton->OnClicked.AddDynamic(this, &USTUMenuWidget::OnQuitGame);
 	}
+	if (b_rounds_up)
+	{
+		b_rounds_up->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRoundsUp);
+	}
+	if (b_rounds_down)
+	{
+		b_rounds_down->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRoundsDown);
+	}
+
 	InitLevelItems();
 }
 
@@ -83,13 +92,24 @@ void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* 
 	if (Animation != HideAnimation) return;
 	if (!STUGameInstance) return;
 
-	STUGameInstance->dem = 2;
 	UGameplayStatics::OpenLevel(this, STUGameInstance->GetStartupLevel().LevelName);
 }
 
 void USTUMenuWidget::OnQuitGame()
 {
 	UKismetSystemLibrary::QuitGame(this, GetOwningPlayer(), EQuitPreference::Quit, true);
+}
+
+void USTUMenuWidget::OnRoundsUp()
+{
+	int32 tmp = STUGameInstance->GetRounds() + 1;
+	STUGameInstance->SetRounds(tmp);
+}
+
+void USTUMenuWidget::OnRoundsDown()
+{
+	int32 tmp = STUGameInstance->GetRounds() - 1;
+	STUGameInstance->SetRounds(tmp);
 }
 
 USTUGameInstance* USTUMenuWidget::GetSTUGameInstance() const

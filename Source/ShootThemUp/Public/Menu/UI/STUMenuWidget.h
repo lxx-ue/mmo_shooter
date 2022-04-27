@@ -26,6 +26,12 @@ protected:
 	UButton* QuitGameButton;
 
 	UPROPERTY(meta = (BindWidget))
+	UButton* b_rounds_up;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* b_rounds_down;
+
+	UPROPERTY(meta = (BindWidget))
 	UHorizontalBox* LevelItemBox;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
@@ -48,6 +54,10 @@ private:
 	void OnStartGame();
 	UFUNCTION()
 	void OnQuitGame();
+	UFUNCTION()
+	void OnRoundsUp();
+	UFUNCTION()
+	void OnRoundsDown();
 
 	void InitLevelItems();
 	void OnLevelSelected(const FLevelData& Data);
