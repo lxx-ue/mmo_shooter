@@ -17,15 +17,26 @@ class SHOOTTHEMUP_API USTUGameInstance : public UGameInstance
 public:
 	FLevelData GetStartupLevel() const { return StartupLevel; }
 	void SetStartupLevel(const FLevelData& Data) { StartupLevel = Data; }
+
 	TArray<FLevelData> GetLevelsData() const { return LevelsData; }
 	FName GetMenuLevelName() const { return MenuLevelName; }
-	void SetRounds(int32 n) { Rounds = FMath::Clamp(n, 1, 10); }
 
+	void SetRounds(int32 n) { RoundsNum = FMath::Clamp(n, 1, 10); }
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
-	int32 GetRounds() const { return Rounds; }
+	int32 GetRounds() const { return RoundsNum; }
+
+	void SetPlayersNum(int32 n) { PlayersNum = FMath::Clamp(n, 2, 10); }
+	UFUNCTION(BlueprintCallable, Category = "GameMode")
+	int32 GetPlayersNum() const { return PlayersNum; }
+
+	void SetRoundTime(int32 n) { RoundTime = FMath::Clamp(n, 30, 300); }
+	UFUNCTION(BlueprintCallable, Category = "GameMode")
+	int32 GetRoundTime() const { return RoundTime; }
 
 	void ToggleVolume();
-	int32 Rounds = 1;
+
+	//gamedata
+
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -39,5 +50,7 @@ protected:
 
 private:
 	FLevelData StartupLevel;
-
+	int32 RoundsNum = 1;
+	int32 PlayersNum = 2;
+	int32 RoundTime = 30;
 };

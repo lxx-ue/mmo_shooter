@@ -13,7 +13,7 @@ int32 USTUGameDataWidget::GetCurrentRoundNum() const
 int32 USTUGameDataWidget::GetTotalRoundNum() const
 {
     const auto GameMode = GetSTUGameMode();
-    return GameMode ? GameMode->GetGameData().RoundsNum : 0;
+    return GameMode ? GameMode->GetRoundsNum() : 0;
 }
 
 int32 USTUGameDataWidget::GetRoundSecondsRemaining() const

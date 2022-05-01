@@ -212,10 +212,10 @@ void USTUWeaponComponent::ChangeClip() //перезарядиться
 {
     if (!CanReload()) return; //может ли..?
     CurrentWeapon->StopFire(); //остановить стрельбу текущего оружия
-    CurrentWeapon->ChangeClip(); //сменить обойму текущего оружия
     //начать анимацию перезарядки
-    ReloadAnimInProgress = true; 
-    PlayAnimMontage(CurrentReloadAnimMontage); 
+    ReloadAnimInProgress = true;
+    PlayAnimMontage(CurrentReloadAnimMontage);
+    CurrentWeapon->ChangeClip(); //сменить обойму текущего оружия
 }
 
 bool USTUWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& UIData) const //возварщает иконки

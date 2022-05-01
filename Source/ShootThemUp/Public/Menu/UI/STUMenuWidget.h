@@ -32,6 +32,18 @@ protected:
 	UButton* b_rounds_down;
 
 	UPROPERTY(meta = (BindWidget))
+	UButton* b_players_up;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* b_players_down;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* b_round_time_up;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* b_round_time_down;
+
+	UPROPERTY(meta = (BindWidget))
 	UHorizontalBox* LevelItemBox;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
@@ -58,6 +70,14 @@ private:
 	void OnRoundsUp();
 	UFUNCTION()
 	void OnRoundsDown();
+	UFUNCTION()
+	void OnPlayersUp();
+	UFUNCTION()
+	void OnPlayersDown();
+	UFUNCTION()
+	void OnRoundTimeUp();
+	UFUNCTION()
+	void OnRoundTimeDown();
 
 	void InitLevelItems();
 	void OnLevelSelected(const FLevelData& Data);

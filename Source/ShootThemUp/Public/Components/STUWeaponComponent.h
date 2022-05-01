@@ -30,6 +30,7 @@ public:
     bool NeedAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType);
 
     void Zoom(bool Enabled);
+    void ChangeClip(); //смена обоймы
 
 protected:
 	//переменная базовый класс оружия - массив структур (оружие + аним монтаж перезарядки)
@@ -80,6 +81,5 @@ private:
     void OnEquipFinished(USkeletalMeshComponent* MeshComp); //сменил оружие
     void OnReloadFinished(USkeletalMeshComponent* MeshComp); //перезарядил оружие
     void OnClipEmpty(ASTUBaseWeapon * AmmoEmptyWeapon);                        //когда обойма пуста
-    void ChangeClip(); //смена обоймы
     bool CanReload() const; //может ли перезарядиться
 };

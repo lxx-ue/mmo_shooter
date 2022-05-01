@@ -31,6 +31,22 @@ void USTUMenuWidget::NativeOnInitialized()
 	{
 		b_rounds_down->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRoundsDown);
 	}
+	if (b_players_up)
+	{
+		b_players_up->OnClicked.AddDynamic(this, &USTUMenuWidget::OnPlayersUp);
+	}
+	if (b_players_down)
+	{
+		b_players_down->OnClicked.AddDynamic(this, &USTUMenuWidget::OnPlayersDown);
+	}
+	if (b_round_time_up)
+	{
+		b_round_time_up->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRoundTimeUp);
+	}
+	if (b_round_time_down)
+	{
+		b_round_time_down->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRoundTimeDown);
+	}
 
 	InitLevelItems();
 }
@@ -110,6 +126,30 @@ void USTUMenuWidget::OnRoundsDown()
 {
 	int32 tmp = STUGameInstance->GetRounds() - 1;
 	STUGameInstance->SetRounds(tmp);
+}
+
+void USTUMenuWidget::OnPlayersUp()
+{
+	int32 tmp = STUGameInstance->GetPlayersNum() + 2;
+	STUGameInstance->SetPlayersNum(tmp);
+}
+
+void USTUMenuWidget::OnPlayersDown()
+{
+	int32 tmp = STUGameInstance->GetPlayersNum() - 2;
+	STUGameInstance->SetPlayersNum(tmp);
+}
+
+void USTUMenuWidget::OnRoundTimeUp()
+{
+	int32 tmp = STUGameInstance->GetRoundTime() + 30;
+	STUGameInstance->SetRoundTime(tmp);
+}
+
+void USTUMenuWidget::OnRoundTimeDown()
+{
+	int32 tmp = STUGameInstance->GetRoundTime() - 30;
+	STUGameInstance->SetRoundTime(tmp);
 }
 
 USTUGameInstance* USTUMenuWidget::GetSTUGameInstance() const

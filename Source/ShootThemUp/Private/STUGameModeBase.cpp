@@ -24,6 +24,7 @@ ASTUGameModeBase::ASTUGameModeBase() {
     if (GetWorld())
     {
         const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+        if (!STUGameInstance) return;
         const auto StartedLevel = STUGameInstance->GetStartupLevel();
 
         UE_LOG(LogSTUGameModeBase, Error, TEXT("%s"), *StartedLevel.LevelDisplayName.ToString());
@@ -35,14 +36,14 @@ void ASTUGameModeBase::StartPlay()
 {
     Super::StartPlay();
     const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
-    GameData.RoundsNum = STUGameInstance->GetRounds();
+    RoundsNum = STUGameInstance->GetRounds();
+    PlayersNum = STUGameInstance->GetPlayersNum();
+    RoundTime = STUGameInstance->GetRoundTime();
     SpawnBots();
     CreateTeamsInfo();
     CurrentRound = 1;
     StartRound();
-
     SetMatchState(ESTUMatchState::InProgress);
-
 }
 
 UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -57,7 +58,7 @@ UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
 void ASTUGameModeBase::SpawnBots()
 {
     if (!GetWorld()) return;
-    for (int32 i = 0; i < GameData.PlayersNum - 1; ++i)
+    for (int32 i = 0; i < PlayersNum - 1; ++i)
     {
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -68,7 +69,7 @@ void ASTUGameModeBase::SpawnBots()
 
 void ASTUGameModeBase::StartRound() 
 {
-    RoundCountDown = GameData.RoundTime;
+    RoundCountDown = RoundTime;
     GetWorldTimerManager().SetTimer(GameRoundTimerHandle, this, &ASTUGameModeBase::GameTimerUpdate, 1.0f, true);
 }
 
@@ -80,7 +81,7 @@ void ASTUGameModeBase::GameTimerUpdate()
     {
         GetWorldTimerManager().ClearTimer(GameRoundTimerHandle);
 
-        if (CurrentRound + 1 <= GameData.RoundsNum)
+        if (CurrentRound + 1 <= RoundsNum)
         {
             ++CurrentRound;
             ResetPlayers();
@@ -132,11 +133,12 @@ void ASTUGameModeBase::CreateTeamsInfo()
 
 FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
 {
-    if (TeamID - 1 < GameData.TeamColors.Num())
-    {
-        return GameData.TeamColors[TeamID - 1];
-    }
-    return GameData.DefaultTeamColor;
+    return TeamID == 1 ? PlayerTeamColor : EnemyTeamColor;
+    //if (TeamID - 1 < TeamColors.Num())
+    //{
+    //    return GameData.TeamColors[TeamID - 1];
+    //}
+    //return GameData.DefaultTeamColor;
 }
 
 void ASTUGameModeBase::SetPlayerColor(AController* Controller)
@@ -157,13 +159,16 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
     const auto KillerPlayerState = KillerController ? Cast<ASTUPlayerState>(KillerController->PlayerState) : nullptr;
     const auto VictimPlayerState = VictimController ? Cast<ASTUPlayerState>(VictimController->PlayerState) : nullptr;
 
-    if (KillerPlayerState)
+    if (!KillerPlayerState || !VictimPlayerState) return;
+    VictimPlayerState->AddDeath();
+
+    if (KillerPlayerState->GetTeamID() == VictimPlayerState->GetTeamID())
+    {
+        KillerPlayerState->AddKillTeammate();
+    }
+    else
     {
         KillerPlayerState->AddKill();
-    }
-    if (VictimPlayerState)
-    {
-        VictimPlayerState->AddDeath();
     }
     StartRespawn(VictimController);
 }
@@ -185,11 +190,11 @@ void ASTUGameModeBase::LogPlayerInfo()
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)
 {
-    const auto RespawnAviable = RoundCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
+    const auto RespawnAviable = RoundCountDown > MinRoundTimeForRespawn + RespawnTime;
     if (!RespawnAviable) return;
     const auto RespawnComponent = STUUtils::GetSTUPlayerComponent<USTURespawnComponent>(Controller);
     if (!RespawnComponent) return;
-    RespawnComponent->Respawn(GameData.RespawnTime);
+    RespawnComponent->Respawn(RespawnTime);
 }
 
 void ASTUGameModeBase::RespawnRequest(AController* Controller)
