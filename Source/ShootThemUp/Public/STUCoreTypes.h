@@ -145,10 +145,10 @@ struct FLevelData //структура оружия
     FName LevelName = NAME_None;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "300"))
-        FName LevelDisplayName = NAME_None;
+    FName LevelDisplayName = NAME_None;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "300"))
-        UTexture2D* LevelThumb;
+    UTexture2D* LevelThumb;
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelSelectedSignature, const FLevelData&);

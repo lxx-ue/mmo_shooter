@@ -5,13 +5,13 @@
 #include "Engine/Canvas.h"
 #include "UI/STUBaseWidget.h"
 #include "STUGameModeBase.h"
+#include "UI/STUPlayerHUDWidget.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUGameHUD, All, All);
 
 void ASTUGameHUD::DrawHUD() 
 {
     Super::DrawHUD();
-    //DrawCrossHair();
 }
 
 void ASTUGameHUD::BeginPlay() 
@@ -21,6 +21,8 @@ void ASTUGameHUD::BeginPlay()
     GameWidgets.Add(ESTUMatchState::InProgress, CreateWidget<USTUBaseWidget>(GetWorld(), PlayerWidgetClass));
     GameWidgets.Add(ESTUMatchState::Pause, CreateWidget<USTUBaseWidget>(GetWorld(), PauseWidgetClass));
     GameWidgets.Add(ESTUMatchState::GameOver, CreateWidget<USTUBaseWidget>(GetWorld(), GameOverWidgetClass));
+    HUDWidget = Cast<USTUPlayerHUDWidget>(PlayerWidgetClass);
+   
 
     for (auto GameWidgetPair : GameWidgets)
     {
@@ -69,4 +71,10 @@ void ASTUGameHUD::DrawCrossHair()
 
     DrawLine(Center.Min - HalfLineSize, Center.Max, Center.Min + HalfLineSize, Center.Max, LineColor, LineThickness);
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThickness);
+}
+
+void ASTUGameHUD::addKillWidget(int32 killer, int32 victim)
+{
+    //HUDWidget->ClearVerticalBox(killer, victim);
+    UE_LOG(LogTemp, Warning, TEXT("killer id = %i, victim id = %i"), killer, victim);
 }

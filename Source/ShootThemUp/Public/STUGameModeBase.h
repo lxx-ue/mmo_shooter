@@ -8,6 +8,7 @@
 #include "STUGameModeBase.generated.h"
 
 class AAIController;
+class ASTUGameHUD;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUGameModeBase : public AGameModeBase
@@ -32,6 +33,8 @@ public:
 
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
+
+    ASTUGameHUD* hewHUD = nullptr;
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")

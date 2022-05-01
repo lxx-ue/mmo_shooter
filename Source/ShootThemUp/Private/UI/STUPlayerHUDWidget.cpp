@@ -6,6 +6,7 @@
 #include "Components/STUWeaponComponent.h"
 #include "Components/ProgressBar.h"
 #include "STUUtils.h"
+#include "Components/VerticalBox.h"
 #include "Player/STUPlayerState.h"
 
 void USTUPlayerHUDWidget::NativeOnInitialized()
@@ -91,4 +92,10 @@ void USTUPlayerHUDWidget::UpdateHealthBar()
     {
         HealthProgressBar->SetFillColorAndOpacity(GetHealthPercent() > PercentColorThreshold ? GoodColor : BadColor);
     }
+}
+
+void USTUPlayerHUDWidget::ClearVerticalBox(int32 killer, int32 victim)
+{
+    //VerticalBox_killbar->ClearChildren();
+    //UE_LOG(LogTemp, Warning, TEXT("killer id = %i, victim id = %i"), killer, victim);
 }

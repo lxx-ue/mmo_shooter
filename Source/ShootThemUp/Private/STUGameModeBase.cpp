@@ -21,6 +21,7 @@ ASTUGameModeBase::ASTUGameModeBase() {
     DefaultPawnClass = ASTUBaseCharacter::StaticClass();
     PlayerControllerClass = ASTUPlayerController::StaticClass();
     HUDClass = ASTUGameHUD::StaticClass();
+    hewHUD = Cast<ASTUGameHUD>(HUDClass);
     if (GetWorld())
     {
         const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
@@ -171,6 +172,8 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
         KillerPlayerState->AddKill();
     }
     StartRespawn(VictimController);
+    hewHUD->addKillWidget(KillerPlayerState->GetTeamID(), VictimPlayerState->GetTeamID());
+    //UE_LOG(LogTemp, Warning, TEXT("killer id = %i, victim id = %i"), KillerPlayerState->GetTeamID(), VictimPlayerState->GetTeamID());
 }
 
 void ASTUGameModeBase::LogPlayerInfo()

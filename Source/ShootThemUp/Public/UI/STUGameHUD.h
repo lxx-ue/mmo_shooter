@@ -8,6 +8,7 @@
 #include "STUGameHUD.generated.h"
 
 class USTUBaseWidget;
+class USTUPlayerHUDWidget;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUGameHUD : public AHUD
@@ -17,6 +18,8 @@ class SHOOTTHEMUP_API ASTUGameHUD : public AHUD
 public:
 	//оверрайд функции рисования хада
     virtual void DrawHUD() override;
+	void addKillWidget(int32 killer, int32 victim);
+	USTUPlayerHUDWidget* HUDWidget = nullptr;
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
@@ -27,6 +30,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> GameOverWidgetClass;
+
+
 
 	virtual void BeginPlay() override;
 
