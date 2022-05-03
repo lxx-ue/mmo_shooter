@@ -172,8 +172,7 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
         KillerPlayerState->AddKill();
     }
     StartRespawn(VictimController);
-    hewHUD->addKillWidget(KillerPlayerState->GetTeamID(), VictimPlayerState->GetTeamID());
-    //UE_LOG(LogTemp, Warning, TEXT("killer id = %i, victim id = %i"), KillerPlayerState->GetTeamID(), VictimPlayerState->GetTeamID());
+    hewHUD->addKillWidget(KillerPlayerState->GetPlayerName(), VictimPlayerState->GetPlayerName());
 }
 
 void ASTUGameModeBase::LogPlayerInfo()

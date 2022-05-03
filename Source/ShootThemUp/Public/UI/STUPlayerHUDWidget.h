@@ -45,7 +45,7 @@ public:
     UPROPERTY(meta = (BindWidget))
         UVerticalBox* VerticalBox_killbar;
 
-    void ClearVerticalBox(int32 killer, int32 victim);
+    void ClearVerticalBox(FString killer, FString victim);
 
 protected:
     UPROPERTY(meta = (BindWidget))

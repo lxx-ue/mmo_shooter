@@ -21,8 +21,9 @@ void ASTUGameHUD::BeginPlay()
     GameWidgets.Add(ESTUMatchState::InProgress, CreateWidget<USTUBaseWidget>(GetWorld(), PlayerWidgetClass));
     GameWidgets.Add(ESTUMatchState::Pause, CreateWidget<USTUBaseWidget>(GetWorld(), PauseWidgetClass));
     GameWidgets.Add(ESTUMatchState::GameOver, CreateWidget<USTUBaseWidget>(GetWorld(), GameOverWidgetClass));
-    HUDWidget = Cast<USTUPlayerHUDWidget>(PlayerWidgetClass);
-   
+    
+    //UE_LOG(LogTemp, Warning, TEXT("%s"), *HUDWidget1->);
+    
 
     for (auto GameWidgetPair : GameWidgets)
     {
@@ -38,6 +39,15 @@ void ASTUGameHUD::BeginPlay()
         if (GameMode)
         {
             GameMode->OnMathcStateChanged.AddUObject(this, &ASTUGameHUD::OnMatchStateChanged);
+        }
+    }
+
+    for (auto GameWidgetPair : GameWidgets)
+    {
+        if (GameWidgetPair.Key == ESTUMatchState::InProgress)
+        {
+            HUDWidget = Cast<USTUPlayerHUDWidget>(GameWidgetPair.Value);
+            addKillWidget("as", "sas");
         }
     }
 }
@@ -73,8 +83,10 @@ void ASTUGameHUD::DrawCrossHair()
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThickness);
 }
 
-void ASTUGameHUD::addKillWidget(int32 killer, int32 victim)
+void ASTUGameHUD::addKillWidget(FString killer, FString victim)
 {
-    //HUDWidget->ClearVerticalBox(killer, victim);
-    UE_LOG(LogTemp, Warning, TEXT("killer id = %i, victim id = %i"), killer, victim);
+    if (!HUDWidget) return;
+    HUDWidget->ClearVerticalBox(killer, victim);
+    //UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
+    
 }

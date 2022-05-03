@@ -18,7 +18,9 @@ class SHOOTTHEMUP_API ASTUGameHUD : public AHUD
 public:
 	//оверрайд функции рисования хада
     virtual void DrawHUD() override;
-	void addKillWidget(int32 killer, int32 victim);
+	void addKillWidget(FString killer, FString victim);
+
+	UPROPERTY()
 	USTUPlayerHUDWidget* HUDWidget = nullptr;
 
 protected:
@@ -30,8 +32,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> GameOverWidgetClass;
-
-
 
 	virtual void BeginPlay() override;
 

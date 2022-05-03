@@ -94,8 +94,8 @@ void USTUPlayerHUDWidget::UpdateHealthBar()
     }
 }
 
-void USTUPlayerHUDWidget::ClearVerticalBox(int32 killer, int32 victim)
+void USTUPlayerHUDWidget::ClearVerticalBox(FString killer, FString victim)
 {
-    //VerticalBox_killbar->ClearChildren();
-    //UE_LOG(LogTemp, Warning, TEXT("killer id = %i, victim id = %i"), killer, victim);
+    //if(VerticalBox_killbar) VerticalBox_killbar->ClearChildren();
+    UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
 }
