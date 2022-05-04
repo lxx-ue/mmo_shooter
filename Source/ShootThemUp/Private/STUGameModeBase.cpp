@@ -63,7 +63,9 @@ void ASTUGameModeBase::SpawnBots()
     {
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-        const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, SpawnInfo);
+        FVector loc(0, 0, 0);
+        FRotator rot(0, 0, 0);
+        const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, loc, rot, SpawnInfo);
         RestartPlayer(STUAIController);
     }
 }
