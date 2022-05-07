@@ -50,6 +50,7 @@ void USTUHealthComponent::OnTakeRadialDamage(AActor* DamagedActor, float Damage,
 
 void USTUHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
+    ApplyDamage(Damage, InstigatedBy);
     UE_LOG(LogHealthComponent, Display, TEXT("On any damage: %f"), Damage);                                                                                                                                                                         
 }
 
