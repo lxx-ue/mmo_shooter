@@ -152,18 +152,15 @@ void USTUWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp) ////
 {
     ACharacter* Character = Cast<ACharacter>(GetOwner()); //получаешь ссылку на персонажа
     if (!Character || Character->GetMesh() != MeshComp) return; //если персонажа нет или меш не совпадает с нашим
-
     EquipAnimInProgress = false; //закончил смену оружия
-    //UE_LOG(LogWeaponComponent, Display, TEXT("Equip finished"));
  }
 
 void USTUWeaponComponent::OnReloadFinished(USkeletalMeshComponent* MeshComp) //когда закончил перезарядку
  {
      ACharacter* Character = Cast<ACharacter>(GetOwner()); //получаешь ссылку на персонажа
      if (!Character || Character->GetMesh() != MeshComp) return; //если персонажа нет или меш не совпадает с нашим
-
      ReloadAnimInProgress = false; //закончил перезарядку
-     //UE_LOG(LogWeaponComponent, Display, TEXT("Equip finished"));
+     CurrentWeapon->ChangeClip(); //сменить обойму текущего оружия
  }
 
 bool USTUWeaponComponent::CanFire() const  //может ли стрелять
@@ -215,7 +212,6 @@ void USTUWeaponComponent::ChangeClip() //перезарядиться
     //начать анимацию перезарядки
     ReloadAnimInProgress = true;
     PlayAnimMontage(CurrentReloadAnimMontage);
-    CurrentWeapon->ChangeClip(); //сменить обойму текущего оружия
 }
 
 bool USTUWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& UIData) const //возварщает иконки

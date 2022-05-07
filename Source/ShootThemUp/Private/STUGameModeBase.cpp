@@ -174,7 +174,7 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
         KillerPlayerState->AddKill();
     }
     StartRespawn(VictimController);
-    hewHUD->addKillWidget(KillerPlayerState->GetPlayerName(), VictimPlayerState->GetPlayerName());
+    //hewHUD->addKillWidget(KillerPlayerState->GetPlayerName(), VictimPlayerState->GetPlayerName());
 }
 
 void ASTUGameModeBase::LogPlayerInfo()
