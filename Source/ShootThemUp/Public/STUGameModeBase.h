@@ -34,7 +34,6 @@ public:
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
 
-    ASTUGameHUD* hewHUD = nullptr;
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")

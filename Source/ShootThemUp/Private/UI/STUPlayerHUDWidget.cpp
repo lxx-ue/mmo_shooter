@@ -99,3 +99,9 @@ void USTUPlayerHUDWidget::ClearVerticalBox(FString killer, FString victim)
     //if(VerticalBox_killbar) VerticalBox_killbar->ClearChildren();
     UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
 }
+
+void USTUPlayerHUDWidget::test()
+{
+    UE_LOG(LogTemp, Warning, TEXT("killer"));
+    VerticalBox_killbar->ClearChildren();
+}

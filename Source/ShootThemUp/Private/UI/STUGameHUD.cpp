@@ -20,10 +20,7 @@ void ASTUGameHUD::BeginPlay()
 
     GameWidgets.Add(ESTUMatchState::InProgress, CreateWidget<USTUBaseWidget>(GetWorld(), PlayerWidgetClass));
     GameWidgets.Add(ESTUMatchState::Pause, CreateWidget<USTUBaseWidget>(GetWorld(), PauseWidgetClass));
-    GameWidgets.Add(ESTUMatchState::GameOver, CreateWidget<USTUBaseWidget>(GetWorld(), GameOverWidgetClass));
-    
-    //UE_LOG(LogTemp, Warning, TEXT("%s"), *HUDWidget1->);
-    
+    GameWidgets.Add(ESTUMatchState::GameOver, CreateWidget<USTUBaseWidget>(GetWorld(), GameOverWidgetClass));    
 
     for (auto GameWidgetPair : GameWidgets)
     {
@@ -46,8 +43,7 @@ void ASTUGameHUD::BeginPlay()
     {
         if (GameWidgetPair.Key == ESTUMatchState::InProgress)
         {
-            HUDWidget = Cast<USTUPlayerHUDWidget>(GameWidgetPair.Value);
-            addKillWidget("as", "sas");
+            HUDWidget = Cast<USTUPlayerHUDWidget>(GameWidgetPair.Value->GetClass());
         }
     }
 }
@@ -74,7 +70,6 @@ void ASTUGameHUD::DrawCrossHair()
 {
     //рисуем прицел
     const TInterval<float> Center(Canvas->SizeX * 0.5f, Canvas->SizeY * 0.5f);
-
     const float HalfLineSize = 10.0f;
     const float LineThickness = 2.0f;
     const FLinearColor LineColor = FLinearColor::Green;
@@ -85,8 +80,15 @@ void ASTUGameHUD::DrawCrossHair()
 
 void ASTUGameHUD::addKillWidget(FString killer, FString victim)
 {
+    //if (!HUDWidget) return;
+    //if(!HUDWidget) HUDWidget->ClearVerticalBox(killer, victim);
+    UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
+    addKill();
+}
+
+void ASTUGameHUD::addKill()
+{
     if (!HUDWidget) return;
-    HUDWidget->ClearVerticalBox(killer, victim);
-    //UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
-    
+    HUDWidget->test();
+    UE_LOG(LogTemp, Warning, TEXT("3 killer id"));
 }

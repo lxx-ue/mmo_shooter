@@ -21,15 +21,11 @@ ASTUGameModeBase::ASTUGameModeBase() {
     DefaultPawnClass = ASTUBaseCharacter::StaticClass();
     PlayerControllerClass = ASTUPlayerController::StaticClass();
     HUDClass = ASTUGameHUD::StaticClass();
-    hewHUD = Cast<ASTUGameHUD>(HUDClass);
     if (GetWorld())
     {
         const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
         if (!STUGameInstance) return;
         const auto StartedLevel = STUGameInstance->GetStartupLevel();
-
-        UE_LOG(LogSTUGameModeBase, Error, TEXT("%s"), *StartedLevel.LevelDisplayName.ToString());
-        //UE_LOG(LogSTUGameModeBase, Error, TEXT("%i"), STUGameInstance->dem);
     }
 }
 
@@ -174,7 +170,9 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
         KillerPlayerState->AddKill();
     }
     StartRespawn(VictimController);
-    //hewHUD->addKillWidget(KillerPlayerState->GetPlayerName(), VictimPlayerState->GetPlayerName());
+    if (!HUDClass) return;
+    const auto hewHUD = Cast<ASTUGameHUD>(HUDClass);
+    hewHUD->addKillWidget(KillerPlayerState->GetPlayerName(), VictimPlayerState->GetPlayerName());
 }
 
 void ASTUGameModeBase::LogPlayerInfo()

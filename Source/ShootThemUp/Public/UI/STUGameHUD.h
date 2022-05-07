@@ -19,9 +19,10 @@ public:
 	//оверрайд функции рисования хада
     virtual void DrawHUD() override;
 	void addKillWidget(FString killer, FString victim);
+	void addKill();
 
 	UPROPERTY()
-	USTUPlayerHUDWidget* HUDWidget = nullptr;
+	class USTUPlayerHUDWidget* HUDWidget = nullptr;
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
