@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "SlateBasics.h"
 #include "STUPlayerStatRowWidget.generated.h"
 
 class UImage;
@@ -21,6 +22,8 @@ public:
 	void SetTeam(const FText& Text);
 	void SetPlayerIndicatorVisibility(bool Visible);
 	void SetTeamColor(const FLinearColor& Color);
+
+	const FSlateFontInfo fontinfo = FSlateFontInfo(FPaths::EngineContentDir() / TEXT("UI/Fonts/Comfortaa-Regular.ttf"), 15);
 
 protected:
 	UPROPERTY(meta = (BindWidget))

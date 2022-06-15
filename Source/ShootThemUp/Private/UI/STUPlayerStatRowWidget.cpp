@@ -8,6 +8,7 @@ void USTUPlayerStatRowWidget::SetPlayerName(const FText& Text)
 {
 	if (!PlayerNameTextBlock) return;
 	PlayerNameTextBlock->SetText(Text);
+	//if (Text.ToString() == "Player") PlayerNameTextBlock->SetFont(fontinfo);
 }
 
 void USTUPlayerStatRowWidget::SetKills(const FText& Text)

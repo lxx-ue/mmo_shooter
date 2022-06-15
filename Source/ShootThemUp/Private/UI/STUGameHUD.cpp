@@ -63,7 +63,7 @@ void ASTUGameHUD::OnMatchStateChanged(ESTUMatchState State)
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
         CurrentWidget->Show();
     }
-    UE_LOG(LogSTUGameHUD, Display, TEXT("Match state changed: %s"), *UEnum::GetValueAsString(State));
+    //UE_LOG(LogSTUGameHUD, Display, TEXT("Match state changed: %s"), *UEnum::GetValueAsString(State));
 }
 
 void ASTUGameHUD::DrawCrossHair()
