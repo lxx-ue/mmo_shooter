@@ -18,6 +18,8 @@ class SHOOTTHEMUP_API USTUGameOverWidget : public USTUBaseWidget
 protected:
 	UPROPERTY(meta = (BindWidget))
 		UVerticalBox* PlayerStatBox;
+	UPROPERTY(meta = (BindWidget))
+		UVerticalBox* PlayerStatBox_1;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 		TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
 	UPROPERTY(meta = (BindWidget))

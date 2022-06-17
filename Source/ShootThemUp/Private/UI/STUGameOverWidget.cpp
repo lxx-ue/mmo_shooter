@@ -37,8 +37,10 @@ void USTUGameOverWidget::OnMatchStateChanged(ESTUMatchState State)
 
 void USTUGameOverWidget::UpdatePlayersStat()
 {
-    if (!GetWorld() || !PlayerStatBox) return;
+    if (!GetWorld() || !PlayerStatBox || !PlayerStatBox_1) return;
     PlayerStatBox->ClearChildren();
+    PlayerStatBox_1->ClearChildren();
+    bool team = true;
 
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
@@ -56,7 +58,17 @@ void USTUGameOverWidget::UpdatePlayersStat()
         PlayerStatRowWidget->SetPlayerIndicatorVisibility(Controller->IsPlayerController());
         PlayerStatRowWidget->SetTeamColor(PlayerState->GetTeamColor());
 
-        PlayerStatBox->AddChild(PlayerStatRowWidget);
+        if (team)
+        {
+            PlayerStatBox->AddChild(PlayerStatRowWidget);
+            team = !team;
+        }
+        else
+        {
+            PlayerStatBox_1->AddChild(PlayerStatRowWidget);
+            team = !team;
+        }
+
     }
 }
 
