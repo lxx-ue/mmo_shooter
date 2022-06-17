@@ -15,11 +15,13 @@ class SHOOTTHEMUP_API USTUPlayerStatRowWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+		FLinearColor PlayerColor = FLinearColor(0.85f, 0.65f, 0.1f, 1.0f);
+
 public:
 	void SetPlayerName(const FText& Text);
 	void SetKills(const FText& Text);
 	void SetDeaths(const FText& Text);
-	void SetTeam(const FText& Text);
+	//void SetTeam(const FText& Text);
 	void SetPlayerIndicatorVisibility(bool Visible);
 	void SetTeamColor(const FLinearColor& Color);
 
@@ -35,11 +37,6 @@ protected:
 	UTextBlock* DeathsTextBlock;
 
 	UPROPERTY(meta = (BindWidget))
-	UTextBlock* TeamTextBlock;
-
-	UPROPERTY(meta = (BindWidget))
 	UImage* PlayerIndicatorImage;
 
-	UPROPERTY(meta = (BindWidget))
-		UImage* TeamImage;
 };

@@ -41,6 +41,30 @@ void USTUGameOverWidget::UpdatePlayersStat()
     PlayerStatBox->ClearChildren();
     PlayerStatBox_1->ClearChildren();
     bool team = true;
+    int head = 0;
+
+    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
+    {
+        if (head > 2) break;
+        const auto Controller = It->Get();
+        if (!Controller) continue;
+        const auto PlayerState = Cast<ASTUPlayerState>(Controller->PlayerState);
+        if (!PlayerState) continue;
+        const auto PlayerStatRowWidget = CreateWidget<USTUPlayerStatRowWidget>(GetWorld(), PlayerStatRowWidgetClass);
+        if (!PlayerStatRowWidget) continue;
+        PlayerStatRowWidget->SetTeamColor(PlayerState->GetTeamColor());
+        if (team)
+        {
+            PlayerStatBox->AddChild(PlayerStatRowWidget);
+            team = !team;
+        }
+        else
+        {
+            PlayerStatBox_1->AddChild(PlayerStatRowWidget);
+            team = !team;
+        }
+        head++;
+    }
 
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
@@ -54,9 +78,9 @@ void USTUGameOverWidget::UpdatePlayersStat()
         PlayerStatRowWidget->SetPlayerName(FText::FromString(PlayerState->GetPlayerName()));
         PlayerStatRowWidget->SetKills(STUUtils::TextFromInt(PlayerState->GetKillsNum()));
         PlayerStatRowWidget->SetDeaths(STUUtils::TextFromInt(PlayerState->GetDeathsNum()));
-        PlayerStatRowWidget->SetTeam(STUUtils::TextFromInt(PlayerState->GetTeamID()));
+        //PlayerStatRowWidget->SetTeam(STUUtils::TextFromInt(PlayerState->GetTeamID()));
         PlayerStatRowWidget->SetPlayerIndicatorVisibility(Controller->IsPlayerController());
-        PlayerStatRowWidget->SetTeamColor(PlayerState->GetTeamColor());
+        //PlayerStatRowWidget->SetTeamColor(PlayerState->GetTeamColor());
 
         if (team)
         {

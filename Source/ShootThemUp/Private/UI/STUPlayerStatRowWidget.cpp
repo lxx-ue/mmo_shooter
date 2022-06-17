@@ -23,20 +23,29 @@ void USTUPlayerStatRowWidget::SetDeaths(const FText& Text)
 	DeathsTextBlock->SetText(Text);
 }
 
-void USTUPlayerStatRowWidget::SetTeam(const FText& Text)
-{
-	if (!TeamTextBlock) return;
-	TeamTextBlock->SetText(Text);
-}
+//void USTUPlayerStatRowWidget::SetTeam(const FText& Text)
+//{
+//	if (!TeamTextBlock) return;
+//	TeamTextBlock->SetText(Text);
+//}
 
 void USTUPlayerStatRowWidget::SetPlayerIndicatorVisibility(bool Visible)
 {
-	if (!PlayerIndicatorImage) return;
-	PlayerIndicatorImage->SetVisibility(Visible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	//if (!PlayerIndicatorImage) return;
+	//PlayerIndicatorImage->SetVisibility(Visible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	//FLinearColor color = FLinearColor(0.7f, 0.7f, 0.7f);
+	if (Visible)
+	{
+		//PlayerNameTextBlock->SetText(FText::FromString("Damn"));
+		PlayerNameTextBlock->SetColorAndOpacity(PlayerColor);
+		KillsTextBlock->SetColorAndOpacity(PlayerColor);
+		DeathsTextBlock->SetColorAndOpacity(PlayerColor);
+		//PlayerIndicatorImage->SetVisibility(Visible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	}
 }
 
 void USTUPlayerStatRowWidget::SetTeamColor(const FLinearColor& Color)
 {
-	if (!TeamImage) return;
-	TeamImage->SetColorAndOpacity(Color);
+	if (!PlayerIndicatorImage) return;
+	PlayerNameTextBlock->SetColorAndOpacity(Color);
 }
