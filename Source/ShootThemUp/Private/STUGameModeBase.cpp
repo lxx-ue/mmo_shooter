@@ -124,7 +124,7 @@ void ASTUGameModeBase::CreateTeamsInfo()
         if (!PlayerState) continue;
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
-        PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "Bot");
+        PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : GetRandomBotName());
         SetPlayerColor(Controller);
         TeamID = TeamID == 1 ? 2 : 1;
     }
@@ -133,11 +133,6 @@ void ASTUGameModeBase::CreateTeamsInfo()
 FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
 {
     return TeamID == 1 ? PlayerTeamColor : EnemyTeamColor;
-    //if (TeamID - 1 < TeamColors.Num())
-    //{
-    //    return GameData.TeamColors[TeamID - 1];
-    //}
-    //return GameData.DefaultTeamColor;
 }
 
 void ASTUGameModeBase::SetPlayerColor(AController* Controller)
@@ -259,4 +254,9 @@ void ASTUGameModeBase::StopAllFire()
         WeaponComponent->StopFire();
         WeaponComponent->Zoom(false);
     }
+}
+
+const FString& ASTUGameModeBase::GetRandomBotName() const
+{
+    return botnames[FMath::RandRange(0, botnames.Num())];
 }
