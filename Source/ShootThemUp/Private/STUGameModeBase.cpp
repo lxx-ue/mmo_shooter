@@ -217,7 +217,6 @@ void ASTUGameModeBase::GameOver()
             Pawn->DisableInput(nullptr);
         }
     }
-
     SetMatchState(ESTUMatchState::GameOver);
 }
 

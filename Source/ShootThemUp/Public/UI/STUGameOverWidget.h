@@ -15,11 +15,21 @@ class SHOOTTHEMUP_API USTUGameOverWidget : public USTUBaseWidget
 {
 	GENERATED_BODY()
 
+public:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
+	bool WidgetDraw = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+		FLinearColor YourTeamColor = FLinearColor::Black;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+		FLinearColor EnemyTeamColor = FLinearColor::Black;
+
 protected:
 	UPROPERTY(meta = (BindWidget))
 		UVerticalBox* PlayerStatBox;
 	UPROPERTY(meta = (BindWidget))
-		UVerticalBox* PlayerStatBox_1;
+		UVerticalBox* EnemyStatBox;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 		TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
 	UPROPERTY(meta = (BindWidget))
