@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "UI/STUPlayerHUDWidget.h"
 #include "Components/STUHealthComponent.h"
 #include "Components/STUWeaponComponent.h"
@@ -92,16 +91,4 @@ void USTUPlayerHUDWidget::UpdateHealthBar()
     {
         HealthProgressBar->SetFillColorAndOpacity(GetHealthPercent() > PercentColorThreshold ? GoodColor : BadColor);
     }
-}
-
-void USTUPlayerHUDWidget::ClearVerticalBox(FString killer, FString victim)
-{
-    //if(VerticalBox_killbar) VerticalBox_killbar->ClearChildren();
-    UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
-}
-
-void USTUPlayerHUDWidget::test()
-{
-    UE_LOG(LogTemp, Warning, TEXT("killer"));
-    VerticalBox_killbar->ClearChildren();
 }

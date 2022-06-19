@@ -74,8 +74,6 @@ void ASTUGameModeBase::StartRound()
 
 void ASTUGameModeBase::GameTimerUpdate()
 {
-    //UE_LOG(LogSTUGameModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
-
     if (--RoundCountDown == 0)
     {
         GetWorldTimerManager().ClearTimer(GameRoundTimerHandle);
@@ -165,24 +163,6 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
         KillerPlayerState->AddKill();
     }
     StartRespawn(VictimController);
-    //if (!HUDClass) return;
-    //const auto hewHUD = Cast<ASTUGameHUD>(HUDClass);
-    //hewHUD->addKillWidget(KillerPlayerState->GetPlayerName(), VictimPlayerState->GetPlayerName());
-}
-
-void ASTUGameModeBase::LogPlayerInfo()
-{
-    if (!GetWorld()) return;
-    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
-    {
-        const auto Controller = It->Get();
-        if (!Controller)
-            continue;
-        const auto PlayerState = Cast<ASTUPlayerState>(Controller->PlayerState);
-        if (!PlayerState)
-            continue;
-        PlayerState->LogInfo();
-    }
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)
@@ -201,9 +181,6 @@ void ASTUGameModeBase::RespawnRequest(AController* Controller)
 
 void ASTUGameModeBase::GameOver()
 {
-    //UE_LOG(LogSTUGameModeBase, Display, TEXT("=====GAME OVER====="));
-    LogPlayerInfo();
-
     for (auto Pawn : TActorRange<APawn>(GetWorld()))
     {
         if (Pawn)

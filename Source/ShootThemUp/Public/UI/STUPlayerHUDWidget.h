@@ -42,12 +42,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "UI")
         int32 GetKillsNum() const;
 
-    UPROPERTY(meta = (BindWidget))
-        UVerticalBox* VerticalBox_killbar;
-
-    void ClearVerticalBox(FString killer, FString victim);
-    void test();
-
 protected:
     UPROPERTY(meta = (BindWidget))
         UProgressBar* HealthProgressBar;

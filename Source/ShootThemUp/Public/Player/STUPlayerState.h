@@ -23,10 +23,7 @@ public:
     int32 GetKillsNum() const { return KillsNum; }
 
 	void AddDeath() { ++DeathsNum; }
-    int32 GetDeathsNum() const { return DeathsNum; }
-
-	void LogInfo() { UE_LOG(LogTemp, Display, TEXT("TeamID: %i, Kills: %i, Deaths: %i"), TeamID, KillsNum, DeathsNum); };
-
+    int32 GetDeathsNum() const { return DeathsNum; }	
 private: 
 	int32 TeamID;
     FLinearColor TeamColor;

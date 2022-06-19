@@ -22,6 +22,4 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 		UTextBlock* victimname;
-
-	
 };
