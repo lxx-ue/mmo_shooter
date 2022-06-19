@@ -14,17 +14,13 @@ UCLASS()
 class SHOOTTHEMUP_API USTUGameOverWidget : public USTUBaseWidget
 {
 	GENERATED_BODY()
-
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
 	bool WidgetDraw = false;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 		FLinearColor YourTeamColor = FLinearColor::Black;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 		FLinearColor EnemyTeamColor = FLinearColor::Black;
-
 protected:
 	UPROPERTY(meta = (BindWidget))
 		UVerticalBox* PlayerStatBox;
@@ -34,13 +30,10 @@ protected:
 		TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
 	UPROPERTY(meta = (BindWidget))
 		UButton* ResetLevelButton;
-
 	virtual void NativeOnInitialized() override;
-
 private:
 	void OnMatchStateChanged(ESTUMatchState State);
 	void UpdatePlayersStat();
-
 	UFUNCTION()
-	void OnResetLevel();
+		void OnResetLevel();
 };

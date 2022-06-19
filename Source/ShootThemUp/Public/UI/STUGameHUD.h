@@ -20,29 +20,22 @@ public:
     virtual void DrawHUD() override;
 	void addKillWidget(FString killer, FString victim);
 	void addKill();
-
 	UPROPERTY()
-	class USTUPlayerHUDWidget* HUDWidget = nullptr;
+		class USTUPlayerHUDWidget* HUDWidget = nullptr;
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    TSubclassOf<UUserWidget> PlayerWidgetClass;
-
+		TSubclassOf<UUserWidget> PlayerWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UUserWidget> PauseWidgetClass;
-
+		TSubclassOf<UUserWidget> PauseWidgetClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UUserWidget> GameOverWidgetClass;
-
+		TSubclassOf<UUserWidget> GameOverWidgetClass;
 	virtual void BeginPlay() override;
-
 private:
 	UPROPERTY()
 		TMap<ESTUMatchState, USTUBaseWidget*> GameWidgets;
-
 	UPROPERTY()
 		USTUBaseWidget* CurrentWidget = nullptr;
-
 	//рисование прицела
     void DrawCrossHair();
 	void OnMatchStateChanged(ESTUMatchState State);

@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "UI/STUGameHUD.h"
 #include "Engine/Canvas.h"
 #include "UI/STUBaseWidget.h"
@@ -63,7 +62,6 @@ void ASTUGameHUD::OnMatchStateChanged(ESTUMatchState State)
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
         CurrentWidget->Show();
     }
-    //UE_LOG(LogSTUGameHUD, Display, TEXT("Match state changed: %s"), *UEnum::GetValueAsString(State));
 }
 
 void ASTUGameHUD::DrawCrossHair()
@@ -80,8 +78,6 @@ void ASTUGameHUD::DrawCrossHair()
 
 void ASTUGameHUD::addKillWidget(FString killer, FString victim)
 {
-    //if (!HUDWidget) return;
-    //if(!HUDWidget) HUDWidget->ClearVerticalBox(killer, victim);
     UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
     addKill();
 }
