@@ -75,16 +75,3 @@ void ASTUGameHUD::DrawCrossHair()
     DrawLine(Center.Min - HalfLineSize, Center.Max, Center.Min + HalfLineSize, Center.Max, LineColor, LineThickness);
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThickness);
 }
-
-void ASTUGameHUD::addKillWidget(FString killer, FString victim)
-{
-    UE_LOG(LogTemp, Warning, TEXT("killer id = %s, victim id = %s"), *killer, *victim);
-    addKill();
-}
-
-void ASTUGameHUD::addKill()
-{
-    if (!HUDWidget) return;
-    HUDWidget->test();
-    UE_LOG(LogTemp, Warning, TEXT("3 killer id"));
-}

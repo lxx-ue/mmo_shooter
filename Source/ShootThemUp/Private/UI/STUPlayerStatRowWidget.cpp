@@ -14,6 +14,7 @@ void USTUPlayerStatRowWidget::SetKills(const FText& Text)
 {
 	if (!KillsTextBlock) return;
 	KillsTextBlock->SetText(Text);
+	kills = FCString::Atoi(*Text.ToString());
 }
 
 void USTUPlayerStatRowWidget::SetDeaths(const FText& Text)
