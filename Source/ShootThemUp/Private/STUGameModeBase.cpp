@@ -137,13 +137,10 @@ FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
 void ASTUGameModeBase::SetPlayerColor(AController* Controller)
 {
     if (!Controller) return;
-
     const auto Character = Cast<ASTUBaseCharacter>(Controller->GetPawn());
     if (!Character) return;
-
     const auto PlayerState = Cast<ASTUPlayerState>(Controller->PlayerState);
     if (!PlayerState) return;
-
     Character->SetPlayerColor(PlayerState->GetTeamColor());
 }
 

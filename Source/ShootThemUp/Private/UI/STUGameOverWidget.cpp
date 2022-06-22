@@ -62,8 +62,18 @@ void USTUGameOverWidget::UpdatePlayersStat()
     }
     uArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.kills > ip2.kills; });
     eArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.kills > ip2.kills; });
-    uArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.deaths < ip2.deaths; });
-    eArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.deaths < ip2.deaths; });
+
+
+
+    for (int i = 0; i < uArray.Num() - 1; i++) {
+        for (int j = 0; j < uArray.Num() - i - 1; j++) {
+            if (uArray[j]->kills == uArray[j + 1]->kills && uArray[j]->deaths > uArray[j + 1]->deaths) 
+                uArray.Swap(j, j + 1);
+            if (eArray[j]->kills == eArray[j + 1]->kills && eArray[j]->deaths > eArray[j + 1]->deaths)
+                eArray.Swap(j, j + 1);
+        }
+    }
+
     for (int i = 0; i < uArray.Num(); i++)
     {
         PlayerStatBox->AddChild(uArray[i]);
