@@ -21,6 +21,7 @@ void USTUPlayerStatRowWidget::SetDeaths(const FText& Text)
 {
 	if (!DeathsTextBlock) return;
 	DeathsTextBlock->SetText(Text);
+	deaths = FCString::Atoi(*Text.ToString());
 }
 
 void USTUPlayerStatRowWidget::SetPlayerIndicatorVisibility(bool Visible)

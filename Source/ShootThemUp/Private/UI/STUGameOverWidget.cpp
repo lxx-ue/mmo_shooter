@@ -35,8 +35,6 @@ void USTUGameOverWidget::UpdatePlayersStat()
     int head = 0;
     TArray<USTUPlayerStatRowWidget*> uArray;
     TArray<USTUPlayerStatRowWidget*> eArray;
-    //inline static bool SortPredicate(AMyClass* itemA, AMyClass* itemB);
-
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
         const auto Controller = It->Get();
@@ -53,24 +51,24 @@ void USTUGameOverWidget::UpdatePlayersStat()
         {
             YourTeamColor = PlayerState->GetTeamColor();
             uArray.Add(PlayerStatRowWidget);
-            //PlayerStatBox->AddChild(PlayerStatRowWidget);
             team = !team;
         }
         else
         {
             EnemyTeamColor = PlayerState->GetTeamColor();
             eArray.Add(PlayerStatRowWidget);
-            //EnemyStatBox->AddChild(PlayerStatRowWidget);
             team = !team;
         }
     }
-    //uArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) {
-    //    // access some random field just to test compile
-    //    return  ip1.() < ip2.IsDeferringMovementUpdates();
-    //    });
-
-    // добавил два массива с игроками команд для сортировки
-    // добавил в класс PlayerStatRowWidget инт параметр количества убийств по нему будет соритровка
+    uArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.kills > ip2.kills; });
+    eArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.kills > ip2.kills; });
+    uArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.deaths < ip2.deaths; });
+    eArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.deaths < ip2.deaths; });
+    for (int i = 0; i < uArray.Num(); i++)
+    {
+        PlayerStatBox->AddChild(uArray[i]);
+        EnemyStatBox->AddChild(eArray[i]);
+    }
     WidgetDraw = true;
 }
 

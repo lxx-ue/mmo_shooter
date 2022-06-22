@@ -122,7 +122,8 @@ void ASTUGameModeBase::CreateTeamsInfo()
         if (!PlayerState) continue;
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
-        PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : GetRandomBotName());
+        FString na = GetRandomBotName();
+        PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : na);
         SetPlayerColor(Controller);
         TeamID = TeamID == 1 ? 2 : 1;
     }
@@ -233,7 +234,7 @@ void ASTUGameModeBase::StopAllFire()
     }
 }
 
-const FString& ASTUGameModeBase::GetRandomBotName() const
+FString ASTUGameModeBase::GetRandomBotName() const
 {
-    return botnames[FMath::RandRange(0, botnames.Num())];
+    return botnames[FMath::RandRange(0, botnames.Num()-1)];
 }

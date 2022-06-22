@@ -56,14 +56,23 @@ private:
     void GameOver();
     void SetMatchState(ESTUMatchState State);
     void StopAllFire();
-    const FString& GetRandomBotName() const;
+    FString GetRandomBotName() const;
 
     TArray<FString> botnames = {
         TEXT("James"),
-        TEXT("Kiki"),
-        TEXT("Stephan"),
-        TEXT("Elo"),
-        TEXT("Creed"),
-        TEXT("Jonathan") 
+        TEXT("Robert"),
+        TEXT("John"),
+        TEXT("Michael"),
+        TEXT("David"),
+        TEXT("William"), 
+        TEXT("Richard"),
+        TEXT("Joseph"),
+        TEXT("Thomas"),
+        TEXT("Charles"),
+        TEXT("Christopher"),
+        TEXT("Daniel"),
+        TEXT("Matthew"),
+        TEXT("Anthony"),
+        TEXT("Mark")
     };
 };

@@ -23,7 +23,7 @@ public:
 	void SetKills(const FText& Text);
 	void SetDeaths(const FText& Text);
 	void SetPlayerIndicatorVisibility(bool Visible);
-	int32 kills;
+	int32 kills, deaths;
 
 protected:
 	UPROPERTY(meta = (BindWidget))
