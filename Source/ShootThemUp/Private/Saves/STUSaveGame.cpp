@@ -3,3 +3,7 @@
 
 #include "Saves/STUSaveGame.h"
 
+USTUSaveGame::USTUSaveGame()
+{
+	PlayerLocation = FVector(0.0f, 0.0f, 0.0f);
+}
