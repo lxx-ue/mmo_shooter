@@ -10,6 +10,7 @@
 #include "Menu/UI/STULevelItemWidget.h"
 #include "Sound/SoundCue.h"
 #include "Components/EditableTextBox.h"
+#include "Saves/STUSaveGame.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUMenuWidget, All, All);
 
@@ -77,12 +78,16 @@ void USTUMenuWidget::InitLevelItems()
 	}
 
 	if (STUGameInstance->GetStartupLevel().LevelName.IsNone())
-	{
 		OnLevelSelected(STUGameInstance->GetLevelsData()[0]);
-	}
 	else
-	{
 		OnLevelSelected(STUGameInstance->GetStartupLevel());
+
+	if (USTUSaveGame* LoadedGame = Cast<USTUSaveGame>(UGameplayStatics::LoadGameFromSlot("stats", 0)))
+	{
+		// The operation was successful, so LoadedGame now contains the data we saved earlier.
+		UE_LOG(LogTemp, Warning, TEXT("LOADED: %s"), *LoadedGame->PlayersName);
+		// etb_PlayerName;
+		STUGameInstance->SetPlayersName(LoadedGame->PlayersName);
 	}
 }
 
@@ -157,12 +162,23 @@ void USTUMenuWidget::OnRoundTimeDown()
 	STUGameInstance->SetRoundTime(tmp);
 }
 
-void USTUMenuWidget::OnNameChanged(const FText& InText, ETextCommit::Type InCommitType)
+void USTUMenuWidget::OnNameChanged(const FText& InText, ETextCommit::Type InCommitType) // ñîõð èìåíè èãðîêà
 {
 	//auto nam = etb_PlayerName->GetText();
 	FString SomeString = InText.ToString();
 	UE_LOG(LogTemp, Log, TEXT("SomeString: %s"), *SomeString);
 	STUGameInstance->SetPlayersName(SomeString);
+
+	if (USTUSaveGame* SaveGameInstance = Cast<USTUSaveGame>(UGameplayStatics::CreateSaveGameObject(USTUSaveGame::StaticClass())))
+	{
+		SaveGameInstance->PlayersName = SomeString;
+		// ÍÀÄÎ ÁÓÄÅÒ ÏÎÄÃÐÓÆÀÒÜ ÑÒÀÒÛ ÈÇ STUGameInstance È ÇÀÍÎÑÈÒÜ Â SaveGameInstance
+
+		if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, "stats", 0))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("SAVED: %s"), *SaveGameInstance->PlayersName);
+		}
+	}
 }
 
 USTUGameInstance* USTUMenuWidget::GetSTUGameInstance() const

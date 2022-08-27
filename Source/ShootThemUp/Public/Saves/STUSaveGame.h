@@ -13,5 +13,7 @@ UCLASS()
 class SHOOTTHEMUP_API USTUSaveGame : public USaveGame
 {
 	GENERATED_BODY()
-
+public:
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FString PlayersName;
 };
