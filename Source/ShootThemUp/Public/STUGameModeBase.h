@@ -32,7 +32,10 @@ protected:
         TSubclassOf<AAIController> AIControllerClass;
     UPROPERTY(EditDefaultsOnly, Category = "Game")
         TSubclassOf<APawn> AIPawnClass;
-    int32 PlayersNum, RoundsNum, RoundTime;
+    int32 PlayersNum;
+    int32 RoundsNum;
+    int32 RoundTime;
+    FString PlayersName;
     FLinearColor PlayerTeamColor = FLinearColor::Blue;
     FLinearColor EnemyTeamColor = FLinearColor::Red;
     int32 RespawnTime = 5;
@@ -51,7 +54,6 @@ private:
     void CreateTeamsInfo();
     FLinearColor DetermineColorByTeamID(int32 TeamID) const;
     void SetPlayerColor(AController* Controller);
-    void LogPlayerInfo();
     void StartRespawn(AController* Controller);
     void GameOver();
     void SetMatchState(ESTUMatchState State);

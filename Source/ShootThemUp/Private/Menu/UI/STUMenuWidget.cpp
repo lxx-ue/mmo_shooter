@@ -9,6 +9,7 @@
 #include "Components/HorizontalBox.h"
 #include "Menu/UI/STULevelItemWidget.h"
 #include "Sound/SoundCue.h"
+#include "Components/EditableTextBox.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUMenuWidget, All, All);
 
@@ -47,6 +48,10 @@ void USTUMenuWidget::NativeOnInitialized()
 	{
 		b_round_time_down->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRoundTimeDown);
 	}
+	//if (etb_PlayerName)
+	//{
+		etb_PlayerName->OnTextCommitted.AddDynamic(this, &USTUMenuWidget::OnNameChanged);
+	//}
 
 	InitLevelItems();
 }
@@ -150,6 +155,14 @@ void USTUMenuWidget::OnRoundTimeDown()
 {
 	int32 tmp = STUGameInstance->GetRoundTime() - 30;
 	STUGameInstance->SetRoundTime(tmp);
+}
+
+void USTUMenuWidget::OnNameChanged(const FText& InText, ETextCommit::Type InCommitType)
+{
+	//auto nam = etb_PlayerName->GetText();
+	FString SomeString = InText.ToString();
+	UE_LOG(LogTemp, Log, TEXT("SomeString: %s"), *SomeString);
+	STUGameInstance->SetPlayersName(SomeString);
 }
 
 USTUGameInstance* USTUMenuWidget::GetSTUGameInstance() const

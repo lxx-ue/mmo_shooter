@@ -12,6 +12,8 @@ class UHorizontalBox;
 class USTUGameInstance;
 class USTULevelItemWidget;
 class USoundCue;
+class UEditableTextBox;
+
 
 UCLASS()
 class SHOOTTHEMUP_API USTUMenuWidget : public USTUBaseWidget
@@ -46,6 +48,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UHorizontalBox* LevelItemBox;
 
+	UPROPERTY(meta = (BindWidget))
+	UEditableTextBox* etb_PlayerName;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUserWidget> LevelItemWidgetClass;
 
@@ -78,6 +83,8 @@ private:
 	void OnRoundTimeUp();
 	UFUNCTION()
 	void OnRoundTimeDown();
+	UFUNCTION()
+	void OnNameChanged(const FText& InText, ETextCommit::Type InCommitType);
 
 	void InitLevelItems();
 	void OnLevelSelected(const FLevelData& Data);

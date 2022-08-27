@@ -33,6 +33,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
 	int32 GetRoundTime() const { return RoundTime; }
 
+	void SetPlayersName(FString n) { PlayersName = n; }
+	UFUNCTION(BlueprintCallable, Category = "GameMode")
+	FString GetPlayersName() const { return PlayersName; }
+
 	void ToggleVolume();
 
 	//gamedata
@@ -53,4 +57,5 @@ private:
 	int32 RoundsNum = 1;
 	int32 PlayersNum = 2;
 	int32 RoundTime = 30;
+	FString PlayersName = "Player";
 };

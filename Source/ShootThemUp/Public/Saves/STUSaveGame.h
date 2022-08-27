@@ -13,5 +13,5 @@ UCLASS()
 class SHOOTTHEMUP_API USTUSaveGame : public USaveGame
 {
 	GENERATED_BODY()
-		FVector PlayerLocation;
+
 };

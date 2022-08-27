@@ -36,6 +36,7 @@ void ASTUGameModeBase::StartPlay()
     RoundsNum = STUGameInstance->GetRounds();
     PlayersNum = STUGameInstance->GetPlayersNum();
     RoundTime = STUGameInstance->GetRoundTime();
+    PlayersName = STUGameInstance->GetPlayersName();
     SpawnBots();
     CreateTeamsInfo();
     CurrentRound = 1;
@@ -122,8 +123,7 @@ void ASTUGameModeBase::CreateTeamsInfo()
         if (!PlayerState) continue;
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
-        FString na = GetRandomBotName();
-        PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : na);
+        PlayerState->SetPlayerName(Controller->IsPlayerController() ? PlayersName : GetRandomBotName());
         SetPlayerColor(Controller);
         TeamID = TeamID == 1 ? 2 : 1;
     }
