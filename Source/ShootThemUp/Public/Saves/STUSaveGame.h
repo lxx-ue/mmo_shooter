@@ -16,4 +16,8 @@ class SHOOTTHEMUP_API USTUSaveGame : public USaveGame
 public:
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	FString PlayersName;
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	int32 PlayersKills;
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	int32 PlayersDeaths;
 };

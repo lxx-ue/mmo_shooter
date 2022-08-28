@@ -49,10 +49,10 @@ void USTUMenuWidget::NativeOnInitialized()
 	{
 		b_round_time_down->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRoundTimeDown);
 	}
-	//if (etb_PlayerName)
-	//{
+	if (etb_PlayerName)
+	{
 		etb_PlayerName->OnTextCommitted.AddDynamic(this, &USTUMenuWidget::OnNameChanged);
-	//}
+	}
 
 	InitLevelItems();
 }
@@ -88,6 +88,8 @@ void USTUMenuWidget::InitLevelItems()
 		UE_LOG(LogTemp, Warning, TEXT("LOADED: %s"), *LoadedGame->PlayersName);
 		// etb_PlayerName;
 		STUGameInstance->SetPlayersName(LoadedGame->PlayersName);
+		STUGameInstance->SetPlayersKills(LoadedGame->PlayersKills);
+		STUGameInstance->SetPlayersDeaths(LoadedGame->PlayersDeaths);
 	}
 }
 
@@ -168,17 +170,7 @@ void USTUMenuWidget::OnNameChanged(const FText& InText, ETextCommit::Type InComm
 	FString SomeString = InText.ToString();
 	UE_LOG(LogTemp, Log, TEXT("SomeString: %s"), *SomeString);
 	STUGameInstance->SetPlayersName(SomeString);
-
-	if (USTUSaveGame* SaveGameInstance = Cast<USTUSaveGame>(UGameplayStatics::CreateSaveGameObject(USTUSaveGame::StaticClass())))
-	{
-		SaveGameInstance->PlayersName = SomeString;
-		// ÍÀÄÎ ÁÓÄÅÒ ÏÎÄÃÐÓÆÀÒÜ ÑÒÀÒÛ ÈÇ STUGameInstance È ÇÀÍÎÑÈÒÜ Â SaveGameInstance
-
-		if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, "stats", 0))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("SAVED: %s"), *SaveGameInstance->PlayersName);
-		}
-	}
+	STUGameInstance->SaveStats();
 }
 
 USTUGameInstance* USTUMenuWidget::GetSTUGameInstance() const

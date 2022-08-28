@@ -37,7 +37,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
 	FString GetPlayersName() const { return PlayersName; }
 
+	void SetPlayersKills(int32 n) { PlayersKills = n; }
+	UFUNCTION(BlueprintCallable, Category = "GameMode")
+	int32 GetPlayersKills() const { return PlayersKills; }
+
+	void SetPlayersDeaths(int32 n) { PlayersDeaths = n; }
+	UFUNCTION(BlueprintCallable, Category = "GameMode")
+	int32 GetPlayersDeaths() const { return PlayersDeaths; }
+
 	void ToggleVolume();
+
+	void SaveStats();
 
 	//gamedata
 
@@ -58,4 +68,6 @@ private:
 	int32 PlayersNum = 2;
 	int32 RoundTime = 30;
 	FString PlayersName = "Player";
+	int32 PlayersKills = 0;
+	int32 PlayersDeaths = 0;
 };

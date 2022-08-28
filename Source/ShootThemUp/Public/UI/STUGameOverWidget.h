@@ -36,4 +36,7 @@ private:
 	void UpdatePlayersStat();
 	UFUNCTION()
 		void OnResetLevel();
+
+	UFUNCTION()
+		void addStats(int32 kills, int32 deaths);
 };

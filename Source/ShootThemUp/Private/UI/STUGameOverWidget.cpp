@@ -8,6 +8,7 @@
 #include "STUUtils.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "STUGameInstance.h"
 
 void USTUGameOverWidget::NativeOnInitialized()
 {
@@ -47,23 +48,21 @@ void USTUGameOverWidget::UpdatePlayersStat()
         PlayerStatRowWidget->SetKills(STUUtils::TextFromInt(PlayerState->GetKillsNum()));
         PlayerStatRowWidget->SetDeaths(STUUtils::TextFromInt(PlayerState->GetDeathsNum()));
         PlayerStatRowWidget->SetPlayerIndicatorVisibility(Controller->IsPlayerController());
+        if(!It.GetIndex()) addStats(PlayerState->GetKillsNum(), PlayerState->GetDeathsNum());
         if (team)
         {
             YourTeamColor = PlayerState->GetTeamColor();
             uArray.Add(PlayerStatRowWidget);
-            team = !team;
         }
         else
         {
             EnemyTeamColor = PlayerState->GetTeamColor();
             eArray.Add(PlayerStatRowWidget);
-            team = !team;
         }
+        team = !team;
     }
     uArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.kills > ip2.kills; });
     eArray.Sort([](const USTUPlayerStatRowWidget& ip1, const USTUPlayerStatRowWidget& ip2) { return  ip1.kills > ip2.kills; });
-
-
 
     for (int i = 0; i < uArray.Num() - 1; i++) {
         for (int j = 0; j < uArray.Num() - i - 1; j++) {
@@ -86,4 +85,13 @@ void USTUGameOverWidget::OnResetLevel()
 {
     const FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this);
     UGameplayStatics::OpenLevel(this, FName(CurrentLevelName));
+}
+
+void USTUGameOverWidget::addStats(int32 kills, int32 deaths)
+{
+    const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+    if (!STUGameInstance) return;
+    STUGameInstance->SetPlayersKills(STUGameInstance->GetPlayersKills() + kills);
+    STUGameInstance->SetPlayersDeaths(STUGameInstance->GetPlayersDeaths() + deaths);
+    STUGameInstance->SaveStats();
 }
