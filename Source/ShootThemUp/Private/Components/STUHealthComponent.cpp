@@ -37,21 +37,30 @@ void USTUHealthComponent::BeginPlay()
 
 void USTUHealthComponent::OnTakePointDamage(AActor* DamagedActor, float Damage, class AController* InstigatedBy, FVector HitLocation, class UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const class UDamageType* DamageType, AActor* DamageCauser)
 {
-    const auto FinalDamage = Damage * GetPointDamagedModifier(DamagedActor, BoneName);
-    UE_LOG(LogHealthComponent, Display, TEXT("On point damage: %f, final damage: %f, bone: %s"), Damage, FinalDamage, *BoneName.ToString());
-    ApplyDamage(FinalDamage, InstigatedBy);
+    if (InstigatedBy)
+    {
+        const auto FinalDamage = Damage * GetPointDamagedModifier(DamagedActor, BoneName);
+        ApplyDamage(FinalDamage, InstigatedBy);
+        UE_LOG(LogHealthComponent, Display, TEXT("On point damage: %f, final damage: %f, bone: %s"), Damage, FinalDamage, *BoneName.ToString());
+    }
 }
 
 void USTUHealthComponent::OnTakeRadialDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, FVector Origin, FHitResult HitInfo, class AController* InstigatedBy, AActor* DamageCauser)
 {
-    UE_LOG(LogHealthComponent, Display, TEXT("On radial damage: %f"), Damage);                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-    ApplyDamage(Damage, InstigatedBy);
+    if (InstigatedBy)
+    {
+        ApplyDamage(Damage, InstigatedBy);
+        UE_LOG(LogHealthComponent, Display, TEXT("On radial damage: %f"), Damage);  
+    }
 }
 
 void USTUHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-    ApplyDamage(Damage, InstigatedBy);
-    UE_LOG(LogHealthComponent, Display, TEXT("On any damage: %f"), Damage);                                                                                                                                                                         
+    if (!InstigatedBy)
+    {
+        ApplyDamage(Damage, InstigatedBy);
+        UE_LOG(LogHealthComponent, Display, TEXT("On any damage: %f"), Damage);
+    }
 }
 
 void USTUHealthComponent::ApplyDamage(float Damage, AController* InstigatedBy)

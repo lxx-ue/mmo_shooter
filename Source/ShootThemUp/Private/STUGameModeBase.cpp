@@ -149,18 +149,13 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
     const auto KillerPlayerState = KillerController ? Cast<ASTUPlayerState>(KillerController->PlayerState) : nullptr;
     const auto VictimPlayerState = VictimController ? Cast<ASTUPlayerState>(VictimController->PlayerState) : nullptr;
 
-    if (!KillerPlayerState || !VictimPlayerState) return;
     VictimPlayerState->AddDeath();
-
-    if (KillerPlayerState->GetTeamID() == VictimPlayerState->GetTeamID())
-    {
-        KillerPlayerState->AddKillTeammate();
-    }
-    else
-    {
-        KillerPlayerState->AddKill();
-    }
     StartRespawn(VictimController);
+    if (KillerPlayerState)
+        if (KillerPlayerState->GetTeamID() == VictimPlayerState->GetTeamID())
+            KillerPlayerState->AddKillTeammate();
+        else
+            KillerPlayerState->AddKill();
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)
