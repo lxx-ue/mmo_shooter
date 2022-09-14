@@ -5,6 +5,7 @@
 #include "UI/STUBaseWidget.h"
 #include "STUGameModeBase.h"
 #include "UI/STUPlayerHUDWidget.h"
+#include <Runtime/Core/Public/Misc/OutputDeviceNull.h>
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUGameHUD, All, All);
 
@@ -45,6 +46,8 @@ void ASTUGameHUD::BeginPlay()
             HUDWidget = Cast<USTUPlayerHUDWidget>(GameWidgetPair.Value->GetClass());
         }
     }
+
+    PlayerHUD = Cast<USTUPlayerHUDWidget>(PlayerWidgetClass);
 }
 
 void ASTUGameHUD::OnMatchStateChanged(ESTUMatchState State)
@@ -75,3 +78,12 @@ void ASTUGameHUD::DrawCrossHair()
     DrawLine(Center.Min - HalfLineSize, Center.Max, Center.Min + HalfLineSize, Center.Max, LineColor, LineThickness);
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThickness);
 }
+
+void ASTUGameHUD::addKill(FString killerName, int32 killerTeam, FString victimName, int32 victimTeam)
+{
+    FOutputDeviceNull OutputDeviceNull;
+    const FString CmdAndParams = FString::Printf(TEXT("Foo %s %d %s %d"), *killerName, killerTeam, *victimName, victimTeam);
+        this->CallFunctionByNameWithArguments(*CmdAndParams, OutputDeviceNull, nullptr, true);
+}
+
+

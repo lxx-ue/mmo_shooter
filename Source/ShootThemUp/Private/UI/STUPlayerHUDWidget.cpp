@@ -5,7 +5,6 @@
 #include "Components/STUWeaponComponent.h"
 #include "Components/ProgressBar.h"
 #include "STUUtils.h"
-#include "Components/VerticalBox.h"
 #include "Player/STUPlayerState.h"
 
 void USTUPlayerHUDWidget::NativeOnInitialized()

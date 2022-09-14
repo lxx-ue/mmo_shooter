@@ -11,6 +11,7 @@
 #include "Components/STUWeaponComponent.h"
 #include "EngineUtils.h"
 #include "STUGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModeBase, All, All);
 
@@ -42,6 +43,7 @@ void ASTUGameModeBase::StartPlay()
     CurrentRound = 1;
     StartRound();
     SetMatchState(ESTUMatchState::InProgress);
+    defaultHUD = Cast<ASTUGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
 }
 
 UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -156,6 +158,8 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
             KillerPlayerState->AddKillTeammate();
         else
             KillerPlayerState->AddKill();
+    defaultHUD->addKill(KillerPlayerState->GetPlayerName(), KillerPlayerState->GetTeamID(),
+        VictimPlayerState->GetPlayerName(), VictimPlayerState->GetTeamID());
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)

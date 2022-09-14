@@ -18,8 +18,9 @@ class SHOOTTHEMUP_API ASTUGameHUD : public AHUD
 public:
 	//оверрайд функции рисования хада
     virtual void DrawHUD() override;
-	void addKillWidget(FString killer, FString victim);
-	void addKill();
+
+	void addKill(FString killerName, int32 killerTeam, FString victimName, int32 victimTeam);
+
 	UPROPERTY()
 		class USTUPlayerHUDWidget* HUDWidget = nullptr;
 
@@ -39,4 +40,6 @@ private:
 	//рисование прицела
     void DrawCrossHair();
 	void OnMatchStateChanged(ESTUMatchState State);
+
+	USTUPlayerHUDWidget* PlayerHUD;
 };

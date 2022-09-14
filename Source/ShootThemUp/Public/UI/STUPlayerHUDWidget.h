@@ -8,7 +8,6 @@
 #include "STUPlayerHUDWidget.generated.h"
 
 class UProgressBar;
-class UVerticalBox;
 
 UCLASS()
 class SHOOTTHEMUP_API USTUPlayerHUDWidget : public USTUBaseWidget
@@ -41,7 +40,7 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "UI")
         int32 GetKillsNum() const;
-
+        
 protected:
     UPROPERTY(meta = (BindWidget))
         UProgressBar* HealthProgressBar;

@@ -59,6 +59,7 @@ private:
     void SetMatchState(ESTUMatchState State);
     void StopAllFire();
     FString GetRandomBotName() const;
+    ASTUGameHUD* defaultHUD;
 
     TArray<FString> botnames = {
         TEXT("James"),
