@@ -13,6 +13,8 @@
 #include "STUGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "Pickups/STUBasePickup.h"
+
 DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModeBase, All, All);
 
 constexpr static int32 MinRoundTimeForRespawn = 10;
@@ -67,6 +69,13 @@ void ASTUGameModeBase::SpawnBots()
         const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, loc, rot, SpawnInfo);
         RestartPlayer(STUAIController);
     }
+
+    /*      хыер бяе назейрш сйюгюммнцн йкюяяю  
+    TArray<AActor*> FoundPawns;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASTUBasePickup::StaticClass(), FoundPawns);
+    auto defaultPawn = Cast<ASTUBasePickup>(FoundPawns[0]);
+    UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s"), *defaultPawn->GetName());
+    */
 }
 
 void ASTUGameModeBase::StartRound() 
