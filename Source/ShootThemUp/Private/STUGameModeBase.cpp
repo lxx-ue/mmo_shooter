@@ -12,8 +12,7 @@
 #include "EngineUtils.h"
 #include "STUGameInstance.h"
 #include "Kismet/GameplayStatics.h"
-
-#include "Pickups/STUBasePickup.h"
+#include "AI/BotSpawner.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModeBase, All, All);
 
@@ -70,12 +69,20 @@ void ASTUGameModeBase::SpawnBots()
         RestartPlayer(STUAIController);
     }
 
-    /*      »Ÿ≈“ ¬—≈ Œ¡⁄≈ “€ ” ¿«¿ÕÕŒ√Œ  À¿——¿  
-    TArray<AActor*> FoundPawns;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASTUBasePickup::StaticClass(), FoundPawns);
-    auto defaultPawn = Cast<ASTUBasePickup>(FoundPawns[0]);
-    UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s"), *defaultPawn->GetName());
-    */
+    TArray<AActor*> Spawners;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotSpawner::StaticClass(), Spawners);
+    if (Spawners.Num() == 2)
+    {
+
+        auto FirstTeam = Cast<ABotSpawner>(Spawners[0]);
+        auto SecondTeam = Cast<ABotSpawner>(Spawners[1]);
+        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, first team #%d"), *FirstTeam->GetName(), FirstTeam->GetTeamID());
+        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, second team #%d"), *SecondTeam->GetName(), SecondTeam->GetTeamID());
+        if (FirstTeam->GetTeamID() == 2)
+            Swap(FirstTeam, SecondTeam);
+        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, first team #%d"), *FirstTeam->GetName(), FirstTeam->GetTeamID());
+        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, second team #%d"), *SecondTeam->GetName(), SecondTeam->GetTeamID());
+    }
 }
 
 void ASTUGameModeBase::StartRound() 
