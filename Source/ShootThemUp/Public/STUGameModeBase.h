@@ -9,6 +9,7 @@
 
 class AAIController;
 class ASTUGameHUD;
+class ABotSpawner;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUGameModeBase : public AGameModeBase
@@ -40,11 +41,15 @@ protected:
     FLinearColor EnemyTeamColor = FLinearColor::Red;
     int32 RespawnTime = 5;
 
+    ABotSpawner* FirstTeam;
+    ABotSpawner* SecondTeam;
+
 private:
     ESTUMatchState MatchState = ESTUMatchState::WaitingToStart;
     int32 CurrentRound = 1;
     int32 RoundCountDown = 0;
     FTimerHandle GameRoundTimerHandle;
+    int32 BotSpawnMode = 1;
 
     void SpawnBots();
     void StartRound();
@@ -58,6 +63,7 @@ private:
     void GameOver();
     void SetMatchState(ESTUMatchState State);
     void StopAllFire();
+    void CreateSpawners();
     FString GetRandomBotName() const;
     ASTUGameHUD* defaultHUD;
 

@@ -19,15 +19,16 @@ public:
 	ABotSpawner();
 	int32 GetTeamID() { return TeamID; }
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Team")
+		TArray<FVector> Points;
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Team", meta = (ClampMin = "1.0", ClampMax = "2.0"))
 		int32 TeamID = 1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Team")
-		TArray<FVector> points;
 
 public:	
 	// Called every frame

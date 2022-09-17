@@ -70,6 +70,7 @@ private:
 	int32 RoundsNum = 1;
 	int32 PlayersNum = 2;
 	int32 RoundTime = 30;
+	bool UsePlayerStarts;
 	// save stats
 	FString PlayersName = "Player";
 	int32 PlayersKills = 0;

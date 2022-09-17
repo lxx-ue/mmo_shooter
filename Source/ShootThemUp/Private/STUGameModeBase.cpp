@@ -39,7 +39,7 @@ void ASTUGameModeBase::StartPlay()
     PlayersNum = STUGameInstance->GetPlayersNum();
     RoundTime = STUGameInstance->GetRoundTime();
     PlayersName = STUGameInstance->GetPlayersName();
-
+    //CreateSpawners();
     SpawnBots();
     CreateTeamsInfo();
     CurrentRound = 1;
@@ -57,6 +57,19 @@ UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
     return Super::GetDefaultPawnClassForController_Implementation(InController);
 }
 
+void ASTUGameModeBase::CreateSpawners()
+{
+    TArray<AActor*> Spawners;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotSpawner::StaticClass(), Spawners);
+    if (Spawners.Num() == 2)
+    {
+        FirstTeam = Cast<ABotSpawner>(Spawners[0]);
+        SecondTeam = Cast<ABotSpawner>(Spawners[1]);
+        if (FirstTeam->GetTeamID() == 2)
+            Swap(FirstTeam, SecondTeam);
+    }
+}
+
 void ASTUGameModeBase::SpawnBots()
 {
     if (!GetWorld()) return;
@@ -67,22 +80,10 @@ void ASTUGameModeBase::SpawnBots()
         FVector loc(0, 0, 0);
         FRotator rot(0, 0, 0);
         const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, loc, rot, SpawnInfo);
-        RestartPlayer(STUAIController);
-    }
-
-    TArray<AActor*> Spawners;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotSpawner::StaticClass(), Spawners);
-    if (Spawners.Num() == 2)
-    {
-
-        auto FirstTeam = Cast<ABotSpawner>(Spawners[0]);
-        auto SecondTeam = Cast<ABotSpawner>(Spawners[1]);
-        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, first team #%d"), *FirstTeam->GetName(), FirstTeam->GetTeamID());
-        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, second team #%d"), *SecondTeam->GetName(), SecondTeam->GetTeamID());
-        if (FirstTeam->GetTeamID() == 2)
-            Swap(FirstTeam, SecondTeam);
-        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, first team #%d"), *FirstTeam->GetName(), FirstTeam->GetTeamID());
-        UE_LOG(LogSTUGameModeBase, Warning, TEXT("On landed: %s, second team #%d"), *SecondTeam->GetName(), SecondTeam->GetTeamID());
+        //RestartPlayer(STUAIController);
+        //UE_LOG(LogTemp, Warning, TEXT("hdd %f : %f : %f"), SecondTeam->Points[0].X, SecondTeam->Points[0].Y, SecondTeam->Points[0].Z)
+        //FTransform her(SecondTeam->Points[0]);
+        //RestartPlayerAtTransform(STUAIController, her);
     }
 }
 
