@@ -54,6 +54,9 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Game")
+		ESTUGameType GameType;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Game")
 		TArray<FLevelData> LevelsData;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Game")

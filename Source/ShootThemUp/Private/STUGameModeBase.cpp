@@ -39,6 +39,7 @@ void ASTUGameModeBase::StartPlay()
     PlayersNum = STUGameInstance->GetPlayersNum();
     RoundTime = STUGameInstance->GetRoundTime();
     PlayersName = STUGameInstance->GetPlayersName();
+
     SpawnBots();
     CreateTeamsInfo();
     CurrentRound = 1;

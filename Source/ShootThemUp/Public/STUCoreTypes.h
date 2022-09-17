@@ -134,6 +134,14 @@ enum class ESTUMatchState : uint8
     GameOver
 };
 
+UENUM(BlueprintType)
+enum class ESTUGameType : uint8
+{
+    TeamDeathMatch = 0,
+    SingleDeathMatch,
+    FlagCapture
+};
+
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTUMatchState);
 
 USTRUCT(BlueprintType)
