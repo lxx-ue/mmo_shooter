@@ -39,7 +39,7 @@ void ASTUGameModeBase::StartPlay()
     PlayersNum = STUGameInstance->GetPlayersNum();
     RoundTime = STUGameInstance->GetRoundTime();
     PlayersName = STUGameInstance->GetPlayersName();
-    //CreateSpawners();
+    CreateSpawners();
     SpawnBots();
     CreateTeamsInfo();
     CurrentRound = 1;
@@ -82,7 +82,12 @@ void ASTUGameModeBase::SpawnBots()
         const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, loc, rot, SpawnInfo);
         //RestartPlayer(STUAIController);
         //UE_LOG(LogTemp, Warning, TEXT("hdd %f : %f : %f"), SecondTeam->Points[0].X, SecondTeam->Points[0].Y, SecondTeam->Points[0].Z)
-        //FTransform her(SecondTeam->Points[0]);
+        
+        FVector spawnerLoc =  SecondTeam->GetActorLocation();
+        FVector he = SecondTeam->Points[0];
+        FVector res(spawnerLoc.X + (6.75 * he.X), spawnerLoc.Y + (3.75 * he.Y), spawnerLoc.Z);
+        FTransform her(res);
+        UE_LOG(LogTemp, Warning, TEXT("hdd %f : %f : %f"), res.X, res.Y, res.Z)
         //RestartPlayerAtTransform(STUAIController, her);
     }
 }
