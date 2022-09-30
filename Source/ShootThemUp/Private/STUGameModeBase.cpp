@@ -25,7 +25,7 @@ ASTUGameModeBase::ASTUGameModeBase() {
     HUDClass = ASTUGameHUD::StaticClass();
     if (GetWorld())
     {
-        const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+        STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
         if (!STUGameInstance) return;
         const auto StartedLevel = STUGameInstance->GetStartupLevel();
     }
@@ -34,11 +34,12 @@ ASTUGameModeBase::ASTUGameModeBase() {
 void ASTUGameModeBase::StartPlay() 
 {
     Super::StartPlay();
-    const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
+    if (!STUGameInstance) return;
     RoundsNum = STUGameInstance->GetRounds();
     PlayersNum = STUGameInstance->GetPlayersNum();
     RoundTime = STUGameInstance->GetRoundTime();
     PlayersName = STUGameInstance->GetPlayersName();
+    GameType = STUGameInstance->GetGameType();
     CreateSpawners();
     SpawnBots();
     CreateTeamsInfo();
@@ -73,6 +74,16 @@ void ASTUGameModeBase::CreateSpawners()
 void ASTUGameModeBase::SpawnBots()
 {
     if (!GetWorld()) return;
+
+    if (GameType == ESTUGameType::TeamDeathMatch)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("TeamDeathMatch"));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("another"));
+    }
+
     for (int32 i = 0; i < PlayersNum - 1; ++i)
     {
         FActorSpawnParameters SpawnInfo;
@@ -80,15 +91,26 @@ void ASTUGameModeBase::SpawnBots()
         FVector loc(0, 0, 0);
         FRotator rot(0, 0, 0);
         const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, loc, rot, SpawnInfo);
-        //RestartPlayer(STUAIController);
+
+        if (GameType == ESTUGameType::TeamDeathMatch)
+        {
+            RestartPlayer(STUAIController);
+        }
+        else
+        {
+            FVector spawnerLoc = SecondTeam->GetActorLocation();
+            FVector he = SecondTeam->Points[i];
+            FVector res(spawnerLoc.X + (6.75 * he.X), spawnerLoc.Y + (3.75 * he.Y), spawnerLoc.Z);
+            FTransform her(res);
+            RestartPlayerAtTransform(STUAIController, her);
+        }
+
+
+        //
         //UE_LOG(LogTemp, Warning, TEXT("hdd %f : %f : %f"), SecondTeam->Points[0].X, SecondTeam->Points[0].Y, SecondTeam->Points[0].Z)
         
-        FVector spawnerLoc =  SecondTeam->GetActorLocation();
-        FVector he = SecondTeam->Points[0];
-        FVector res(spawnerLoc.X + (6.75 * he.X), spawnerLoc.Y + (3.75 * he.Y), spawnerLoc.Z);
-        FTransform her(res);
-        UE_LOG(LogTemp, Warning, TEXT("hdd %f : %f : %f"), res.X, res.Y, res.Z)
-        //RestartPlayerAtTransform(STUAIController, her);
+       
+        //
     }
 }
 

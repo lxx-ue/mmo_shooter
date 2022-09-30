@@ -45,6 +45,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
 	int32 GetPlayersDeaths() const { return PlayersDeaths; }
 
+	void SetGameType(ESTUGameType n) { GameType = n; }
+	UFUNCTION(BlueprintCallable, Category = "GameMode")
+	ESTUGameType GetGameType() const { return GameType; }
+
 	void ToggleVolume();
 
 	void SaveStats();
@@ -75,4 +79,5 @@ private:
 	FString PlayersName = "Player";
 	int32 PlayersKills = 0;
 	int32 PlayersDeaths = 0;
+
 };

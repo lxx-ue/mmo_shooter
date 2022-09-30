@@ -10,6 +10,7 @@
 class AAIController;
 class ASTUGameHUD;
 class ABotSpawner;
+class USTUGameInstance;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUGameModeBase : public AGameModeBase
@@ -43,6 +44,9 @@ protected:
 
     ABotSpawner* FirstTeam;
     ABotSpawner* SecondTeam;
+
+    USTUGameInstance* STUGameInstance;
+    ESTUGameType GameType;
 
 private:
     ESTUMatchState MatchState = ESTUMatchState::WaitingToStart;
