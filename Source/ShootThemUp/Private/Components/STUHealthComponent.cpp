@@ -130,7 +130,6 @@ void USTUHealthComponent::PlayCameraShake()
 
 void USTUHealthComponent::Killed(AController* KillerController)
 {
-    //if (!GetWorld()) return;
     const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
     if (!GameMode) return;
 

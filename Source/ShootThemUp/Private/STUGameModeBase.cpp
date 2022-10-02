@@ -39,7 +39,7 @@ void ASTUGameModeBase::StartPlay()
     PlayersNum = STUGameInstance->GetPlayersNum();
     RoundTime = STUGameInstance->GetRoundTime();
     PlayersName = STUGameInstance->GetPlayersName();
-    GameType = STUGameInstance->GetGameType();
+    GameType = STUGameInstance->GetStartupLevel().GameType;
     CreateSpawners();
     SpawnBots();
     CreateTeamsInfo();
@@ -92,17 +92,17 @@ void ASTUGameModeBase::SpawnBots()
         FRotator rot(0, 0, 0);
         const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, loc, rot, SpawnInfo);
 
-        if (GameType == ESTUGameType::TeamDeathMatch)
-        {
-            RestartPlayer(STUAIController);
-        }
-        else
+        if (GameType == ESTUGameType::FlagCapture)
         {
             FVector spawnerLoc = SecondTeam->GetActorLocation();
             FVector he = SecondTeam->Points[i];
             FVector res(spawnerLoc.X + (6.75 * he.X), spawnerLoc.Y + (3.75 * he.Y), spawnerLoc.Z);
             FTransform her(res);
             RestartPlayerAtTransform(STUAIController, her);
+        }
+        else
+        {
+            RestartPlayer(STUAIController);
         }
 
 
@@ -200,11 +200,25 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
     StartRespawn(VictimController);
     if (KillerPlayerState)
         if (KillerPlayerState->GetTeamID() == VictimPlayerState->GetTeamID())
+        {
             KillerPlayerState->AddKillTeammate();
+            if (KillerPlayerState->GetTeamID() == 1)
+                PlayerTeamPoints--;
+            else
+                EnemiesTeamPoints--;
+        }
         else
+        {
             KillerPlayerState->AddKill();
+            if (KillerPlayerState->GetTeamID() == 1)
+                PlayerTeamPoints++;
+            else
+                EnemiesTeamPoints++;
+        }
     defaultHUD->addKill(KillerPlayerState->GetPlayerName(), KillerPlayerState->GetTeamID(),
         VictimPlayerState->GetPlayerName(), VictimPlayerState->GetTeamID());
+
+
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)
@@ -213,7 +227,7 @@ void ASTUGameModeBase::StartRespawn(AController* Controller)
     if (!RespawnAviable) return;
     const auto RespawnComponent = STUUtils::GetSTUPlayerComponent<USTURespawnComponent>(Controller);
     if (!RespawnComponent) return;
-    RespawnComponent->Respawn(RespawnTime);
+    RespawnComponent->Respawn(RespawnTime); // RespawnRequest
 }
 
 void ASTUGameModeBase::RespawnRequest(AController* Controller)

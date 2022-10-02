@@ -22,6 +22,18 @@ int32 USTUGameDataWidget::GetRoundSecondsRemaining() const
     return GameMode ? GameMode->GetRoundSecondsRemaining() : 0;
 }
 
+int32 USTUGameDataWidget::GetPlayerTeamPoints() const
+{
+    const auto GameMode = GetSTUGameMode();
+    return GameMode ? GameMode->GetPlayerTeamPoints() : 0;
+}
+
+int32 USTUGameDataWidget::GetEnemiesTeamPoints() const
+{
+    const auto GameMode = GetSTUGameMode();
+    return GameMode ? GameMode->GetEnemiesTeamPoints() : 0;
+}
+
 ASTUGameModeBase* USTUGameDataWidget::GetSTUGameMode() const
 {
     return GetWorld() ? Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode()) : nullptr;

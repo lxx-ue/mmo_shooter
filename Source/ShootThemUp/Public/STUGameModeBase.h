@@ -26,6 +26,8 @@ public:
     int32 GetRoundsNum() const { return RoundsNum; }
     int32 GetCurrentRoundNum() const { return CurrentRound; }
     int32 GetRoundSecondsRemaining() const { return RoundCountDown; }
+    int32 GetPlayerTeamPoints() const { return PlayerTeamPoints; }
+    int32 GetEnemiesTeamPoints() const { return EnemiesTeamPoints; }
     void RespawnRequest(AController* Controller);
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
@@ -47,6 +49,9 @@ protected:
 
     USTUGameInstance* STUGameInstance;
     ESTUGameType GameType;
+
+    int32 PlayerTeamPoints = 0;
+    int32 EnemiesTeamPoints = 0;
 
 private:
     ESTUMatchState MatchState = ESTUMatchState::WaitingToStart;

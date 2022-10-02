@@ -21,6 +21,10 @@ public:
     int32 GetTotalRoundNum() const;
     UFUNCTION(BlueprintCallable, Category = "UI")
     int32 GetRoundSecondsRemaining() const;
+    UFUNCTION(BlueprintCallable, Category = "UI")
+    int32 GetPlayerTeamPoints() const;
+    UFUNCTION(BlueprintCallable, Category = "UI")
+    int32 GetEnemiesTeamPoints() const;
 
 private:
     ASTUGameModeBase* GetSTUGameMode() const;

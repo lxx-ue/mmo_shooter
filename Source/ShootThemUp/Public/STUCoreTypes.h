@@ -145,7 +145,7 @@ enum class ESTUGameType : uint8
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTUMatchState);
 
 USTRUCT(BlueprintType)
-struct FLevelData //структура оружия
+struct FLevelData //структура уровня
 {
     GENERATED_USTRUCT_BODY()
 
@@ -157,6 +157,9 @@ struct FLevelData //структура оружия
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "300"))
     UTexture2D* LevelThumb;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
+        ESTUGameType GameType;
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelSelectedSignature, const FLevelData&);
