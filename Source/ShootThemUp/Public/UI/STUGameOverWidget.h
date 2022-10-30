@@ -9,6 +9,7 @@
 
 class UVerticalBox;
 class UButton;
+class UTextBlock;
 
 UCLASS()
 class SHOOTTHEMUP_API USTUGameOverWidget : public USTUBaseWidget
@@ -30,10 +31,13 @@ protected:
 		TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
 	UPROPERTY(meta = (BindWidget))
 		UButton* ResetLevelButton;
+	UPROPERTY(meta = (BindWidget))
+		UTextBlock* txtGameResult;
 	virtual void NativeOnInitialized() override;
 private:
 	void OnMatchStateChanged(ESTUMatchState State);
 	void UpdatePlayersStat();
+	void SetGameResultText();
 	UFUNCTION()
 		void OnResetLevel();
 

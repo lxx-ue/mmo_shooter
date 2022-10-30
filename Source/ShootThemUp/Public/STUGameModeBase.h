@@ -31,6 +31,7 @@ public:
     void RespawnRequest(AController* Controller);
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
+    ESTUGameResult GetGameResult() { return GameResult; }
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
         TSubclassOf<AAIController> AIControllerClass;
@@ -49,6 +50,7 @@ protected:
 
     USTUGameInstance* STUGameInstance;
     ESTUGameType GameType;
+    ESTUGameResult GameResult;
 
     int32 PlayerTeamPoints = 0;
     int32 EnemiesTeamPoints = 0;
@@ -73,6 +75,7 @@ private:
     void SetMatchState(ESTUMatchState State);
     void StopAllFire();
     void CreateSpawners();
+    ESTUGameResult SetGameResult();
     FString GetRandomBotName() const;
     ASTUGameHUD* defaultHUD;
 

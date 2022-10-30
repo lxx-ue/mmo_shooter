@@ -7,6 +7,7 @@
 #include "Components/VerticalBox.h"
 #include "STUUtils.h"
 #include "Components/Button.h"
+#include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 #include "STUGameInstance.h"
 
@@ -34,6 +35,7 @@ void USTUGameOverWidget::UpdatePlayersStat()
     if (!GetWorld() || !PlayerStatBox || !EnemyStatBox) return;
     bool team = true;
     int head = 0;
+    SetGameResultText();
     TArray<USTUPlayerStatRowWidget*> uArray;
     TArray<USTUPlayerStatRowWidget*> eArray;
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
@@ -94,4 +96,19 @@ void USTUGameOverWidget::addStats(int32 kills, int32 deaths)
     STUGameInstance->SetPlayersKills(STUGameInstance->GetPlayersKills() + kills);
     STUGameInstance->SetPlayersDeaths(STUGameInstance->GetPlayersDeaths() + deaths);
     STUGameInstance->SaveStats();
+}
+
+void USTUGameOverWidget::SetGameResultText()
+{
+    const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
+    if (!GameMode) return; 
+    auto res = GameMode->GetGameResult();
+    auto resTxt = "GAME OVER";
+    if (res == ESTUGameResult::Victory)
+        resTxt = "VICTORY";
+    else if (res == ESTUGameResult::Defeat)
+        resTxt = "DEFEAT";
+    else
+        resTxt = "DRAW";
+    txtGameResult->SetText(FText::FromString(resTxt));
 }

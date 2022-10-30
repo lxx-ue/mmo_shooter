@@ -163,3 +163,11 @@ struct FLevelData //структура уровня
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelSelectedSignature, const FLevelData&);
+
+UENUM(BlueprintType)
+enum class ESTUGameResult : uint8
+{
+    Victory = 0,
+    Defeat,
+    Draw
+};

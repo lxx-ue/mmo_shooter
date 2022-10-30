@@ -217,8 +217,6 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
         }
     defaultHUD->addKill(KillerPlayerState->GetPlayerName(), KillerPlayerState->GetTeamID(),
         VictimPlayerState->GetPlayerName(), VictimPlayerState->GetTeamID());
-
-
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)
@@ -245,7 +243,18 @@ void ASTUGameModeBase::GameOver()
             Pawn->DisableInput(nullptr);
         }
     }
+    GameResult = SetGameResult();
     SetMatchState(ESTUMatchState::GameOver);
+}
+
+ESTUGameResult ASTUGameModeBase::SetGameResult()
+{
+    if (PlayerTeamPoints > EnemiesTeamPoints)
+        return ESTUGameResult::Victory;
+    else if (PlayerTeamPoints < EnemiesTeamPoints)
+        return ESTUGameResult::Defeat;
+    else
+        return ESTUGameResult::Draw;
 }
 
 void ASTUGameModeBase::SetMatchState(ESTUMatchState State)
