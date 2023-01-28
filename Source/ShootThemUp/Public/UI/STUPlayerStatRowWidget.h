@@ -19,10 +19,19 @@ class SHOOTTHEMUP_API USTUPlayerStatRowWidget : public UUserWidget
 
 
 public:
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
 	void SetPlayerName(const FText& Text);
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
 	void SetKills(const FText& Text);
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
 	void SetDeaths(const FText& Text);
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
 	void SetPlayerIndicatorVisibility(bool Visible);
+
 	int32 kills, deaths;
 
 protected:

@@ -13,17 +13,23 @@ class SHOOTTHEMUP_API ASTUPlayerState : public APlayerState
 	
 public:
     void SetTeamID(int32 ID) { TeamID = ID; }
-    int32 GetTeamID() const { return TeamID; }
-
 	void SetTeamColor(const FLinearColor& Color) { TeamColor = Color; }
-    FLinearColor GetTeamColor() const { return TeamColor; }
-	
 	void AddKill() { ++KillsNum; }
 	void AddKillTeammate() { --KillsNum; }
-    int32 GetKillsNum() const { return KillsNum; }
-
 	void AddDeath() { ++DeathsNum; }
-    int32 GetDeathsNum() const { return DeathsNum; }	
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+	FLinearColor GetTeamColor() const { return TeamColor; }
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+	int32 GetKillsNum() const { return KillsNum; }
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+    int32 GetDeathsNum() const { return DeathsNum; }
+
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+	int32 GetTeamID() const { return TeamID; }
+
 private: 
 	int32 TeamID;
     FLinearColor TeamColor;

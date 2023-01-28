@@ -82,8 +82,6 @@ void ASTUGameHUD::DrawCrossHair()
 void ASTUGameHUD::addKill(FString killerName, int32 killerTeam, FString victimName, int32 victimTeam)
 {
     FOutputDeviceNull OutputDeviceNull;
-    const FString CmdAndParams = FString::Printf(TEXT("Foo %s %d %s %d"), *killerName, killerTeam, *victimName, victimTeam);
+    const FString CmdAndParams = FString::Printf(TEXT("AddKillBar %s %d %s %d"), *killerName, killerTeam, *victimName, victimTeam);
         this->CallFunctionByNameWithArguments(*CmdAndParams, OutputDeviceNull, nullptr, true);
 }
-
-
