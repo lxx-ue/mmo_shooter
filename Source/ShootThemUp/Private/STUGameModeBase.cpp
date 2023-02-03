@@ -199,6 +199,7 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
     VictimPlayerState->AddDeath();
     StartRespawn(VictimController);
     if (KillerPlayerState)
+    {
         if (KillerPlayerState->GetTeamID() == VictimPlayerState->GetTeamID())
         {
             KillerPlayerState->AddKillTeammate();
@@ -215,8 +216,8 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
             else
                 EnemiesTeamPoints++;
         }
-    defaultHUD->addKill(KillerPlayerState->GetPlayerName(), KillerPlayerState->GetTeamID(),
-        VictimPlayerState->GetPlayerName(), VictimPlayerState->GetTeamID());
+        defaultHUD->addKill(KillerPlayerState->GetPlayerName(), KillerPlayerState->GetTeamID(), VictimPlayerState->GetPlayerName(), VictimPlayerState->GetTeamID());
+    }
 }
 
 void ASTUGameModeBase::StartRespawn(AController* Controller)
