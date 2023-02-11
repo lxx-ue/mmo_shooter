@@ -113,6 +113,7 @@ void USTUWeaponComponent::StopFire()
 void USTUWeaponComponent::NextWeapon() //сменить оружие
 {
     if (!CanEquip()) return; //если можешь
+    ReloadAnimInProgress = false;
     CurrentWeaponIndex = (CurrentWeaponIndex + 1) % Weapons.Num(); //меняем номер текущего оружия
     EquipWeapon(CurrentWeaponIndex); //переключаем оружие по номеру
 }
@@ -171,8 +172,8 @@ bool USTUWeaponComponent::CanFire() const  //может ли стрелять
 
 bool USTUWeaponComponent::CanEquip() const //может ли сменить оружие
 {
-    //не меняешь оружие и не перезаряжаешься
-    return !EquipAnimInProgress && !ReloadAnimInProgress;
+    //не меняешь оружие 
+    return !EquipAnimInProgress ;
 }
 
 bool USTUWeaponComponent::CanReload() const //может ли перезарядиться
