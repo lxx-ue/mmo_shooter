@@ -49,6 +49,7 @@ void ASTUPlayerController::SetupInputComponent()
 	if (!InputComponent) return;
 	InputComponent->BindAction("PauseGame", IE_Pressed, this, &ASTUPlayerController::OnPauseGame);
 	InputComponent->BindAction("Mute", IE_Pressed, this, &ASTUPlayerController::OnMuteSound);
+	InputComponent->BindAction("GodMode", IE_Pressed, this, &ASTUPlayerController::OnGodMode);
 }
 
 void ASTUPlayerController::OnPauseGame()
@@ -63,4 +64,9 @@ void ASTUPlayerController::OnMuteSound()
 	const auto STUGameInstance = GetWorld()->GetGameInstance<USTUGameInstance>();
 	if (!STUGameInstance) return;
 	STUGameInstance->ToggleVolume();
+}
+
+void ASTUPlayerController::OnGodMode()
+{
+	bGodMode = !bGodMode;
 }

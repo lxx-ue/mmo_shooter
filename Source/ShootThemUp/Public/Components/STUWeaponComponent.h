@@ -32,6 +32,9 @@ public:
     void Zoom(bool Enabled);
     void ChangeClip(); //смена обоймы
 
+    bool GetEquipAnimInProgress() const { return EquipAnimInProgress; }
+    bool GetReloadAnimInProgress() const { return ReloadAnimInProgress; }
+
 protected:
 	//переменная базовый класс оружия - массив структур (оружие + аним монтаж перезарядки)
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")

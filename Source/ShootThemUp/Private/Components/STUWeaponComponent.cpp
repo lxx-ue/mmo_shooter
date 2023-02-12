@@ -154,12 +154,14 @@ void USTUWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp) ////
     ACharacter* Character = Cast<ACharacter>(GetOwner()); //получаешь ссылку на персонажа
     if (!Character || Character->GetMesh() != MeshComp) return; //если персонажа нет или меш не совпадает с нашим
     EquipAnimInProgress = false; //закончил смену оружия
+    ReloadAnimInProgress = false; //закончил перезарядку
  }
 
 void USTUWeaponComponent::OnReloadFinished(USkeletalMeshComponent* MeshComp) //когда закончил перезарядку
  {
      ACharacter* Character = Cast<ACharacter>(GetOwner()); //получаешь ссылку на персонажа
      if (!Character || Character->GetMesh() != MeshComp) return; //если персонажа нет или меш не совпадает с нашим
+     EquipAnimInProgress = false; //закончил смену оружия
      ReloadAnimInProgress = false; //закончил перезарядку
      CurrentWeapon->ChangeClip(); //сменить обойму текущего оружия
  }

@@ -8,6 +8,7 @@
 #include "STUGameModeBase.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Perception/AISense_Damage.h"
+#include <ShootThemUp/Public/Player/STUPlayerController.h>
 
 //#include "Camera/CameraShake.h"
 
@@ -67,6 +68,13 @@ void USTUHealthComponent::ApplyDamage(float Damage, AController* InstigatedBy)
 {
     if (Damage <= 0.0f || IsDead() || !GetWorld())
         return; //если урон отрицательный или мы уже мертвы выходим из функции
+
+    const auto Player = Cast<APawn>(GetOwner());
+    const auto VictimController = Player ? Player->Controller : nullptr;
+    VictimController->IsPlayerController();
+    const auto PlayerController = Cast<ASTUPlayerController>(VictimController);
+    if (PlayerController && PlayerController->bGodMode) return;
+
     //установка хп исходя из урона
     SetHealth(Health - Damage);
     //очищаем таймер восстановления хп

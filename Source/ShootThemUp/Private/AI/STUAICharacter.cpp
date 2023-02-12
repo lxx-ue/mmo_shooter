@@ -8,6 +8,7 @@
 #include "Components/WidgetComponent.h"
 #include "UI/STUHealthBarWidget.h"
 #include "Components/STUHealthComponent.h"
+#include <ShootThemUp/Public/STUUtils.h>
 
 ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTUAIWeaponComponent>("WeaponComponent"))
@@ -37,6 +38,11 @@ void ASTUAICharacter::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     UpdateHealthWidgetVisibility();
+
+    const auto weaponComponent = STUUtils::GetSTUPlayerComponent<USTUWeaponComponent>(Controller->GetPawn());
+    
+    UE_LOG(LogTemp, Display, TEXT("ReloadAnimInProgress: %d"), weaponComponent->GetReloadAnimInProgress());
+    UE_LOG(LogTemp, Display, TEXT("EquipAnimInProgress: %d"), weaponComponent->GetEquipAnimInProgress());
 }
 
 void ASTUAICharacter::OnDeath()

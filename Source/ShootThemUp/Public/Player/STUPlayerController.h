@@ -17,6 +17,9 @@ class SHOOTTHEMUP_API ASTUPlayerController : public APlayerController
 public:
 	ASTUPlayerController();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Health")
+		bool bGodMode;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USTURespawnComponent* RespawnComponent;
@@ -29,4 +32,5 @@ private:
 	void OnPauseGame();
 	void OnMatchStateChanged(ESTUMatchState State);
 	void OnMuteSound();
+	void OnGodMode();
 };
