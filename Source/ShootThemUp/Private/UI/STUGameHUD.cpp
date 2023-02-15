@@ -79,9 +79,9 @@ void ASTUGameHUD::DrawCrossHair()
     DrawLine(Center.Min, Center.Max - HalfLineSize, Center.Min, Center.Max + HalfLineSize, LineColor, LineThickness);
 }
 
-void ASTUGameHUD::addKill(FString killerName, int32 killerTeam, FString victimName, int32 victimTeam)
+void ASTUGameHUD::addKill(FString killerName, int32 killerTeam, FString victimName, int32 victimTeam, bool HeadShot)
 {
     FOutputDeviceNull OutputDeviceNull;
-    const FString CmdAndParams = FString::Printf(TEXT("AddKillBar %s %d %s %d"), *killerName, killerTeam, *victimName, victimTeam);
+    const FString CmdAndParams = FString::Printf(TEXT("AddKillBar %s %d %s %d %d"), *killerName, killerTeam, *victimName, victimTeam, (int)HeadShot);
         this->CallFunctionByNameWithArguments(*CmdAndParams, OutputDeviceNull, nullptr, true);
 }

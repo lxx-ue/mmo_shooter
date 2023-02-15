@@ -59,6 +59,8 @@ protected:
 	virtual void BeginPlay() override;
 	
 private:
+    const FString HeadBone = "b_head";
+
 	//здоровье
     float Health = 0.0f;
 
@@ -81,8 +83,8 @@ private:
 
     void PlayCameraShake();
 
-    void Killed(AController* KillerController);
-    void ApplyDamage(float Damage, AController* InstigatedBy);
+    void Killed(AController* KillerController, bool HeadShot);
+    void ApplyDamage(float Damage, AController* InstigatedBy, bool HeadShot = false);
     float GetPointDamagedModifier(AActor* DamagedActor, const FName& BoneName);
 
     void ReportDamageEvent(float Damage, AController* InstigatedBy);

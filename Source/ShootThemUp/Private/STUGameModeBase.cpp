@@ -191,7 +191,7 @@ void ASTUGameModeBase::SetPlayerColor(AController* Controller)
     Character->SetPlayerColor(PlayerState->GetTeamColor());
 }
 
-void ASTUGameModeBase::Killed(AController* KillerController, AController* VictimController)
+void ASTUGameModeBase::Killed(AController* KillerController, AController* VictimController, bool HeadShot)
 {
     const auto KillerPlayerState = KillerController ? Cast<ASTUPlayerState>(KillerController->PlayerState) : nullptr;
     const auto VictimPlayerState = VictimController ? Cast<ASTUPlayerState>(VictimController->PlayerState) : nullptr;
@@ -216,7 +216,7 @@ void ASTUGameModeBase::Killed(AController* KillerController, AController* Victim
             else
                 EnemiesTeamPoints++;
         }
-        defaultHUD->addKill(KillerPlayerState->GetPlayerName(), KillerPlayerState->GetTeamID(), VictimPlayerState->GetPlayerName(), VictimPlayerState->GetTeamID());
+        defaultHUD->addKill(KillerPlayerState->GetPlayerName(), KillerPlayerState->GetTeamID(), VictimPlayerState->GetPlayerName(), VictimPlayerState->GetTeamID(), HeadShot);
     }
 }
 

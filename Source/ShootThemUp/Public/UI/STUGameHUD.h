@@ -19,7 +19,7 @@ public:
 	//оверрайд функции рисования хада
     virtual void DrawHUD() override;
 
-	void addKill(FString killerName, int32 killerTeam, FString victimName, int32 victimTeam);
+	void addKill(FString killerName, int32 killerTeam, FString victimName, int32 victimTeam, bool HeadShot);
 
 	UPROPERTY()
 		class USTUPlayerHUDWidget* HUDWidget = nullptr;

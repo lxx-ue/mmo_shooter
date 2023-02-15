@@ -22,7 +22,7 @@ public:
     FOnMatchStateChangedSignature OnMathcStateChanged;
     virtual void StartPlay() override;
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
-    void Killed(AController* KillerController, AController* VictimController);
+    void Killed(AController* KillerController, AController* VictimController, bool HeadShot);
     int32 GetRoundsNum() const { return RoundsNum; }
     int32 GetCurrentRoundNum() const { return CurrentRound; }
     int32 GetRoundSecondsRemaining() const { return RoundCountDown; }

@@ -41,7 +41,8 @@ void USTUHealthComponent::OnTakePointDamage(AActor* DamagedActor, float Damage, 
     if (InstigatedBy)
     {
         const auto FinalDamage = Damage * GetPointDamagedModifier(DamagedActor, BoneName);
-        ApplyDamage(FinalDamage, InstigatedBy);
+        bool HeadShot = *BoneName.ToString() == HeadBone;
+        ApplyDamage(FinalDamage, InstigatedBy, HeadShot);
         UE_LOG(LogHealthComponent, Display, TEXT("On point damage: %f, final damage: %f, bone: %s"), Damage, FinalDamage, *BoneName.ToString());
     }
 }
@@ -64,7 +65,7 @@ void USTUHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
     }
 }
 
-void USTUHealthComponent::ApplyDamage(float Damage, AController* InstigatedBy)
+void USTUHealthComponent::ApplyDamage(float Damage, AController* InstigatedBy, bool HeadShot)
 {
     if (Damage <= 0.0f || IsDead() || !GetWorld())
         return; //если урон отрицательный или мы уже мертвы выходим из функции
@@ -83,7 +84,7 @@ void USTUHealthComponent::ApplyDamage(float Damage, AController* InstigatedBy)
     if (IsDead())
     {
         //смерть
-        Killed(InstigatedBy);
+        Killed(InstigatedBy, HeadShot);
         OnDeath.Broadcast();
     }
     else if (AutoHeal)
@@ -136,14 +137,14 @@ void USTUHealthComponent::PlayCameraShake()
     Controller->PlayerCameraManager->StartCameraShake(CameraShake); //тряска камеры
 }
 
-void USTUHealthComponent::Killed(AController* KillerController)
+void USTUHealthComponent::Killed(AController* KillerController, bool HeadShot)
 {
     const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
     if (!GameMode) return;
 
     const auto Player = Cast<APawn>(GetOwner());
     const auto VictimController = Player ? Player->Controller : nullptr;
-    GameMode->Killed(KillerController, VictimController);
+    GameMode->Killed(KillerController, VictimController, HeadShot);
 }
 
 float USTUHealthComponent::GetPointDamagedModifier(AActor* DamagedActor, const FName& BoneName)
