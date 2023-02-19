@@ -53,20 +53,23 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     TSubclassOf<UCameraShakeBase> CameraShake;
 
+    // материалы для разного урона
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
         TMap<UPhysicalMaterial*, float> DamagedModifiers;
 
 	virtual void BeginPlay() override;
 	
 private:
+    // конст кости головы
     const FString HeadBone = "b_head";
 
 	//здоровье
     float Health = 0.0f;
 
+    //таймер регенерации
     FTimerHandle HealTimerHandle;
 
-    //функция получения урона
+    //функции получения урона
 	UFUNCTION()
         void OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
     UFUNCTION()
@@ -81,10 +84,14 @@ private:
     //изменение здоровья
     void SetHealth(float NewHealth);
 
+    // метод тряски камеры
     void PlayCameraShake();
 
+    // метод обработки убийства
     void Killed(AController* KillerController, bool HeadShot);
+    // получение урона
     void ApplyDamage(float Damage, AController* InstigatedBy, bool HeadShot = false);
+    // урон по костям
     float GetPointDamagedModifier(AActor* DamagedActor, const FName& BoneName);
 
     void ReportDamageEvent(float Damage, AController* InstigatedBy);

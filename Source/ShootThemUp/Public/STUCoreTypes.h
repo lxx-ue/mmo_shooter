@@ -139,7 +139,8 @@ enum class ESTUGameType : uint8
 {
     TeamDeathMatch = 0,
     SingleDeathMatch,
-    FlagCapture
+    FlagCapture,
+    MountainKing
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangedSignature, ESTUMatchState);

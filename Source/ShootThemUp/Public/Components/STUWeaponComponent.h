@@ -83,6 +83,6 @@ private:
     void InitAnimations(); //инит анимаций
     void OnEquipFinished(USkeletalMeshComponent* MeshComp); //сменил оружие
     void OnReloadFinished(USkeletalMeshComponent* MeshComp); //перезарядил оружие
-    void OnClipEmpty(ASTUBaseWeapon * AmmoEmptyWeapon);                        //когда обойма пуста
+    void OnClipEmpty(ASTUBaseWeapon * AmmoEmptyWeapon); //когда обойма пуста
     bool CanReload() const; //может ли перезарядиться
 };

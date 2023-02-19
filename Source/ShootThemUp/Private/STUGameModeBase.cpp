@@ -35,18 +35,22 @@ void ASTUGameModeBase::StartPlay()
 {
     Super::StartPlay();
     if (!STUGameInstance) return;
+
+    // берем настройки из инстанса
     RoundsNum = STUGameInstance->GetRounds();
     PlayersNum = STUGameInstance->GetPlayersNum();
     RoundTime = STUGameInstance->GetRoundTime();
     PlayersName = STUGameInstance->GetPlayersName();
     GameType = STUGameInstance->GetStartupLevel().GameType;
-    CreateSpawners();
-    SpawnBots();
-    CreateTeamsInfo();
-    CurrentRound = 1;
-    StartRound();
-    SetMatchState(ESTUMatchState::InProgress);
-    defaultHUD = Cast<ASTUGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());
+
+    CreateSpawners(); // создаем спавнеры
+    SpawnBots(); // создаем ботов
+    CreateTeamsInfo(); // распределяем ботов по командам
+
+    StartRound(); // старт первого раунда
+    SetMatchState(ESTUMatchState::InProgress); // стейт выставляется в прогресс
+
+    defaultHUD = Cast<ASTUGameHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD()); //ссылка на хад
 }
 
 UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -58,10 +62,10 @@ UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
     return Super::GetDefaultPawnClassForController_Implementation(InController);
 }
 
-void ASTUGameModeBase::CreateSpawners()
+void ASTUGameModeBase::CreateSpawners() // создание спавнеров
 {
     TArray<AActor*> Spawners;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotSpawner::StaticClass(), Spawners);
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotSpawner::StaticClass(), Spawners); //ищем все спавнеры на сцене и добавляем в массив
     if (Spawners.Num() == 2)
     {
         FirstTeam = Cast<ABotSpawner>(Spawners[0]);
@@ -104,13 +108,6 @@ void ASTUGameModeBase::SpawnBots()
         {
             RestartPlayer(STUAIController);
         }
-
-
-        //
-        //UE_LOG(LogTemp, Warning, TEXT("hdd %f : %f : %f"), SecondTeam->Points[0].X, SecondTeam->Points[0].Y, SecondTeam->Points[0].Z)
-        
-       
-        //
     }
 }
 
@@ -158,7 +155,7 @@ void ASTUGameModeBase::ResetOnePlayer(AController* Controller)
     SetPlayerColor(Controller);
 }
 
-void ASTUGameModeBase::CreateTeamsInfo()
+void ASTUGameModeBase::CreateTeamsInfo() // распределяем ботов по командам
 {
     if (!GetWorld()) return;
     int32 TeamID = 1;

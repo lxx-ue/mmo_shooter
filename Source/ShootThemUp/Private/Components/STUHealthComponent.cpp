@@ -152,7 +152,7 @@ float USTUHealthComponent::GetPointDamagedModifier(AActor* DamagedActor, const F
     const auto Character = Cast<ACharacter>(DamagedActor);
     if (!Character || !Character->GetMesh() || !Character->GetMesh()->GetBodyInstance(BoneName)) return 1.0f;
 
-    const auto PhysMaterial = Character->GetMesh()->GetBodyInstance(BoneName)->GetSimplePhysicalMaterial();
+    const auto PhysMaterial = Character->GetMesh()->GetBodyInstance(BoneName)->GetSimplePhysicalMaterial(); // получение материала по кости
     if (!PhysMaterial || !DamagedModifiers.Contains(PhysMaterial)) return 1.0f;
     return DamagedModifiers[PhysMaterial];
 }
