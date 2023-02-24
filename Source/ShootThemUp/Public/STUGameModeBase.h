@@ -46,8 +46,8 @@ protected:
     int32 RoundsNum;
     int32 RoundTime;
     FString PlayersName;
-    FLinearColor PlayerTeamColor = FLinearColor::Blue;
-    FLinearColor EnemyTeamColor = FLinearColor::Red;
+    FLinearColor PlayerTeamColor;
+    FLinearColor EnemyTeamColor;
     int32 RespawnTime = 5;
 
     ABotSpawner* FirstTeam;
@@ -60,32 +60,33 @@ protected:
     int32 PlayerTeamPoints = 0;
     int32 EnemiesTeamPoints = 0;
 
+    FString GetRandomBotName() const;
+    void SetPlayerColor(AController* Controller);
 private:
     int32 CurrentRound = 1;
     int32 RoundCountDown = 0;
-    int32 BotSpawnMode = 1;
 
     ESTUMatchState MatchState = ESTUMatchState::WaitingToStart;
     FTimerHandle GameRoundTimerHandle;
     ESTUGameResult SetGameResult();
     ASTUGameHUD* defaultHUD;
 
-    FString GetRandomBotName() const;
-    FLinearColor DetermineColorByTeamID(int32 TeamID) const;
+    
+    virtual FLinearColor DetermineColorByTeamID(int32 TeamID) const;
 
-    void SpawnBots(); 
+    virtual void SpawnBots();
     void StartRound();
     void GameTimerUpdate();
     void ResetPlayers();
 
-    void CreateTeamsInfo();
+    virtual void CreateTeamsInfo();
     void GameOver();
     void SetMatchState(ESTUMatchState State);
     void StopAllFire();
-    void CreateSpawners();
+    //void CreateSpawners();
 
     void ResetOnePlayer(AController* Controller);
-    void SetPlayerColor(AController* Controller);
+
     void StartRespawn(AController* Controller);
 
     // имена ботов

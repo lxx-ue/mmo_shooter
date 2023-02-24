@@ -17,6 +17,7 @@ public:
 	void AddKill() { ++KillsNum; }
 	void AddKillTeammate() { --KillsNum; }
 	void AddDeath() { ++DeathsNum; }
+	void SetIsPlayer(bool player) { isPlayer = player; }
 
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 	FLinearColor GetTeamColor() const { return TeamColor; }
@@ -30,7 +31,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Stats")
 	int32 GetTeamID() const { return TeamID; }
 
+	UFUNCTION(BlueprintCallable, Category = "Stats")
+	bool GetIsPlayer() const { return isPlayer; }
+
 private: 
+	bool isPlayer = false;
+
 	int32 TeamID;
     FLinearColor TeamColor;
 

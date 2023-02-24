@@ -19,6 +19,8 @@ public:
 	// Sets default values for this character's properties
 	ASTUBaseCharacter(const FObjectInitializer & ObjInit);
 
+	void SetPlayerColor(const FLinearColor& Color);
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USTUHealthComponent* HealthComponent;
@@ -61,8 +63,6 @@ public:
 	//функция возвращает направление движение игрока
 	UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
-
-	void SetPlayerColor(const FLinearColor& Color);
 
 private:
 	UFUNCTION()

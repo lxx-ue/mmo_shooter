@@ -18,6 +18,8 @@ void USTUGameInstance::SaveStats()
 		SaveGameInstance->PlayersName = PlayersName;
 		SaveGameInstance->PlayersKills = PlayersKills;
 		SaveGameInstance->PlayersDeaths = PlayersDeaths;
+		SaveGameInstance->PlayerTeamColor = PlayerTeamColor;
+		SaveGameInstance->EnemyTeamColor = EnemyTeamColor;
 
 		if (UGameplayStatics::SaveGameToSlot(SaveGameInstance, "stats", 0))
 		{

@@ -20,4 +20,8 @@ public:
 	int32 PlayersKills;
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	int32 PlayersDeaths;
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FLinearColor PlayerTeamColor;
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	FLinearColor EnemyTeamColor;
 };

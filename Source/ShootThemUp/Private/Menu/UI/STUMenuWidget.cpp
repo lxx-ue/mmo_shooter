@@ -3,6 +3,8 @@
 
 #include "Menu/UI/STUMenuWidget.h"
 #include "Components/Button.h"
+#include "Components/Image.h"
+#include "Components/CanvasPanel.h"
 #include "Kismet/GameplayStatics.h"
 #include "STUGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -11,6 +13,7 @@
 #include "Sound/SoundCue.h"
 #include "Components/EditableTextBox.h"
 #include "Saves/STUSaveGame.h"
+#include "Player/STUBaseCharacter.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogSTUMenuWidget, All, All);
 
@@ -53,7 +56,70 @@ void USTUMenuWidget::NativeOnInitialized()
 	{
 		etb_PlayerName->OnTextCommitted.AddDynamic(this, &USTUMenuWidget::OnNameChanged);
 	}
-
+	if (b_label_canvas)
+	{
+		b_label_canvas->OnClicked.AddDynamic(this, &USTUMenuWidget::OnLabelCanvasButtonSelected);
+	}
+	if (b_solo_game_canvas)
+	{
+		b_solo_game_canvas->OnClicked.AddDynamic(this, &USTUMenuWidget::OnSoloGameCanvasButtonSelected);
+	}
+	if (b_authors_canvas)
+	{
+		b_authors_canvas->OnClicked.AddDynamic(this, &USTUMenuWidget::OnAuthorsCanvasButtonSelected);
+	}
+	if (b_change_player_color)
+	{
+		b_change_player_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnChangePlayerColor);
+	}
+	if (b_change_enemy_color)
+	{
+		b_change_enemy_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnChangeEnemyColor);
+	}
+	if (b_save_color)
+	{
+		b_save_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnColorSelected);
+	}
+	if (b_red_color)
+	{
+		b_red_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnRedColorSelected);
+	}
+	if (b_blue_color)
+	{
+		b_blue_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnBlueColorSelected);
+	}
+	if (b_orange_color)
+	{
+		b_orange_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnOrangeColorSelected);
+	}
+	if (b_green_color)
+	{
+		b_green_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnGreenColorSelected);
+	}
+	if (b_cyan_color)
+	{
+		b_cyan_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnCyanColorSelected);
+	}
+	if (b_yellow_color)
+	{
+		b_yellow_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnYellowColorSelected);
+	}
+	if (b_purple_color)
+	{
+		b_purple_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnPurpleColorSelected);
+	}
+	if (b_pink_color)
+	{
+		b_pink_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnPinkColorSelected);
+	}
+	if (b_black_color)
+	{
+		b_black_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnBlackColorSelected);
+	}
+	if (b_white_color)
+	{
+		b_white_color->OnClicked.AddDynamic(this, &USTUMenuWidget::OnWhiteColorSelected);
+	}
 	InitLevelItems();
 }
 
@@ -90,6 +156,10 @@ void USTUMenuWidget::InitLevelItems()
 		STUGameInstance->SetPlayersName(LoadedGame->PlayersName);
 		STUGameInstance->SetPlayersKills(LoadedGame->PlayersKills);
 		STUGameInstance->SetPlayersDeaths(LoadedGame->PlayersDeaths);
+		img_player_color->SetColorAndOpacity(LoadedGame->PlayerTeamColor);
+		STUGameInstance->SetPlayerTeamColor(LoadedGame->PlayerTeamColor);
+		img_enemy_color->SetColorAndOpacity(LoadedGame->EnemyTeamColor);
+		STUGameInstance->SetEnemyTeamColor(LoadedGame->EnemyTeamColor);
 	}
 }
 
@@ -111,6 +181,8 @@ void USTUMenuWidget::OnLevelSelected(const FLevelData& Data)
 
 void USTUMenuWidget::OnStartGame()
 {
+	STUGameInstance->SetPlayerTeamColor(img_player_color->ColorAndOpacity);
+	STUGameInstance->SetEnemyTeamColor(img_enemy_color->ColorAndOpacity);
 	PlayAnimation(HideAnimation);
 	UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
 }
@@ -177,4 +249,149 @@ USTUGameInstance* USTUMenuWidget::GetSTUGameInstance() const
 {
 	if (!GetWorld()) return nullptr;
 	return GetWorld()->GetGameInstance<USTUGameInstance>();
+}
+
+void USTUMenuWidget::OnLabelCanvasButtonSelected()
+{
+	SwitchCanvas(0);
+}
+
+void USTUMenuWidget::OnSoloGameCanvasButtonSelected()
+{
+	SwitchCanvas(1);
+}
+
+void USTUMenuWidget::OnAuthorsCanvasButtonSelected()
+{
+	SwitchCanvas(2);
+}
+
+void USTUMenuWidget::SwitchCanvas(int32 CanvasNum)
+{
+	canvas_solo_game->SetVisibility(ESlateVisibility::Hidden);
+	canvas_authors->SetVisibility(ESlateVisibility::Hidden);
+	canvas_player_info->SetVisibility(ESlateVisibility::Hidden);
+	canvas_color_selecter->SetVisibility(ESlateVisibility::Hidden);
+
+	if (CanvasNum)
+		canvas_blank->SetVisibility(ESlateVisibility::Visible);
+	else
+	{
+		canvas_blank->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	if (CanvasNum == 1)
+	{
+		canvas_solo_game->SetVisibility(ESlateVisibility::Visible);
+		canvas_player_info->SetVisibility(ESlateVisibility::Visible);
+	}
+
+	if (CanvasNum == 2)
+	{
+		canvas_authors->SetVisibility(ESlateVisibility::Visible);
+	}
+
+}
+
+void USTUMenuWidget::OnChangePlayerColor()
+{
+	isPlayerColorSelecting = true;
+	canvas_solo_game->SetVisibility(ESlateVisibility::Hidden);
+	canvas_blank->SetVisibility(ESlateVisibility::Hidden);
+	canvas_color_selecter->SetVisibility(ESlateVisibility::Visible);
+}
+
+void USTUMenuWidget::OnChangeEnemyColor()
+{
+	isPlayerColorSelecting = false;
+	canvas_solo_game->SetVisibility(ESlateVisibility::Hidden);
+	canvas_blank->SetVisibility(ESlateVisibility::Hidden);
+	canvas_color_selecter->SetVisibility(ESlateVisibility::Visible);
+}
+
+void USTUMenuWidget::OnColorSelected()
+{
+	canvas_solo_game->SetVisibility(ESlateVisibility::Visible);
+	canvas_blank->SetVisibility(ESlateVisibility::Visible);
+	canvas_color_selecter->SetVisibility(ESlateVisibility::Hidden);
+	if (isPlayerColorSelecting)
+	{
+		img_player_color->SetColorAndOpacity(SelectedColor);
+		STUGameInstance->SetPlayerTeamColor(SelectedColor);
+		STUGameInstance->SaveStats();
+	}
+	else
+	{
+		img_enemy_color->SetColorAndOpacity(SelectedColor);
+		STUGameInstance->SetEnemyTeamColor(SelectedColor);
+		STUGameInstance->SaveStats();
+	}
+}
+
+void USTUMenuWidget::OnRedColorSelected()
+{
+	SelectedColor = b_red_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnBlueColorSelected()
+{
+	SelectedColor = b_blue_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnOrangeColorSelected()
+{
+	SelectedColor = b_orange_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnGreenColorSelected()
+{
+	SelectedColor = b_green_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnCyanColorSelected()
+{
+	SelectedColor = b_cyan_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnYellowColorSelected()
+{
+	SelectedColor = b_yellow_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnPurpleColorSelected()
+{
+	SelectedColor = b_purple_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnPinkColorSelected()
+{
+	SelectedColor = b_pink_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnBlackColorSelected()
+{
+	SelectedColor = b_black_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::OnWhiteColorSelected()
+{
+	SelectedColor = b_white_color->ColorAndOpacity;
+	SetSceneCharacterColor();
+}
+
+void USTUMenuWidget::SetSceneCharacterColor()
+{
+	TArray<AActor*> Characters;
+    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASTUBaseCharacter::StaticClass(), Characters);
+	const auto Character = Cast<ASTUBaseCharacter>(Characters[0]);
+	Character->SetPlayerColor(SelectedColor);
 }

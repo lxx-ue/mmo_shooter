@@ -42,8 +42,10 @@ void ASTUGameModeBase::StartPlay()
     RoundTime = STUGameInstance->GetRoundTime();
     PlayersName = STUGameInstance->GetPlayersName();
     GameType = STUGameInstance->GetStartupLevel().GameType;
+    PlayerTeamColor = STUGameInstance->GetPlayerTeamColor();
+    EnemyTeamColor = STUGameInstance->GetEnemyTeamColor();
 
-    CreateSpawners(); // создаем спавнеры
+    //CreateSpawners(); // создаем спавнеры
     SpawnBots(); // создаем ботов
     CreateTeamsInfo(); // распределяем ботов по командам
 
@@ -62,49 +64,28 @@ UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AContr
     return Super::GetDefaultPawnClassForController_Implementation(InController);
 }
 
-void ASTUGameModeBase::CreateSpawners() // создание спавнеров
-{
-    TArray<AActor*> Spawners;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotSpawner::StaticClass(), Spawners); //ищем все спавнеры на сцене и добавляем в массив
-    if (Spawners.Num() == 2)
-    {
-        FirstTeam = Cast<ABotSpawner>(Spawners[0]);
-        SecondTeam = Cast<ABotSpawner>(Spawners[1]);
-        if (FirstTeam->GetTeamID() == 2)
-            Swap(FirstTeam, SecondTeam);
-    }
-}
+//void ASTUGameModeBase::CreateSpawners() // создание спавнеров
+//{
+//    TArray<AActor*> Spawners;
+//    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABotSpawner::StaticClass(), Spawners); //ищем все спавнеры на сцене и добавляем в массив
+//    if (Spawners.Num() == 2)
+//    {
+//        FirstTeam = Cast<ABotSpawner>(Spawners[0]);
+//        SecondTeam = Cast<ABotSpawner>(Spawners[1]);
+//        if (FirstTeam->GetTeamID() == 2)
+//            Swap(FirstTeam, SecondTeam);
+//    }
+//}
 
 void ASTUGameModeBase::SpawnBots()
 {
     if (!GetWorld()) return;
 
-    if (GameType == ESTUGameType::TeamDeathMatch)
-    {
-        UE_LOG(LogTemp, Warning, TEXT("TeamDeathMatch"));
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("another"));
-    }
-
     for (int32 i = 0; i < PlayersNum - 1; ++i)
     {
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-        FVector loc(0, 0, 0);
-        FRotator rot(0, 0, 0);
-        const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, loc, rot, SpawnInfo);
-
-        if (GameType == ESTUGameType::FlagCapture)
-        {
-            FVector spawnerLoc = SecondTeam->GetActorLocation();
-            FVector he = SecondTeam->Points[i];
-            FVector res(spawnerLoc.X + (6.75 * he.X), spawnerLoc.Y + (3.75 * he.Y), spawnerLoc.Z);
-            FTransform her(res);
-            RestartPlayerAtTransform(STUAIController, her);
-        }
-        else
+        const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, SpawnInfo);
         {
             RestartPlayer(STUAIController);
         }
@@ -155,27 +136,15 @@ void ASTUGameModeBase::ResetOnePlayer(AController* Controller)
     SetPlayerColor(Controller);
 }
 
+// оверрайд
 void ASTUGameModeBase::CreateTeamsInfo() // распределяем ботов по командам
 {
-    if (!GetWorld()) return;
-    int32 TeamID = 1;
-    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
-    {
-        const auto Controller = It->Get();
-        if (!Controller) continue;
-        const auto PlayerState = Cast<ASTUPlayerState>(Controller->PlayerState);
-        if (!PlayerState) continue;
-        PlayerState->SetTeamID(TeamID);
-        PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
-        PlayerState->SetPlayerName(Controller->IsPlayerController() ? PlayersName : GetRandomBotName());
-        SetPlayerColor(Controller);
-        TeamID = TeamID == 1 ? 2 : 1;
-    }
 }
 
+// оверрайд
 FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
 {
-    return TeamID == 1 ? PlayerTeamColor : EnemyTeamColor;
+    return FLinearColor::Red;
 }
 
 void ASTUGameModeBase::SetPlayerColor(AController* Controller)
