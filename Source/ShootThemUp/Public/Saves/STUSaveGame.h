@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
+#include "STUCoreTypes.h"
 #include "STUSaveGame.generated.h"
 
 /**
@@ -21,7 +22,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Basic)
 	int32 PlayersDeaths;
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-	FLinearColor PlayerTeamColor;
+		FSTUColors PlayerTeamColor;
 	UPROPERTY(VisibleAnywhere, Category = Basic)
-	FLinearColor EnemyTeamColor;
+		FSTUColors EnemyTeamColor;
 };

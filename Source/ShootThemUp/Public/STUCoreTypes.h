@@ -172,3 +172,15 @@ enum class ESTUGameResult : uint8
     Defeat,
     Draw
 };
+
+USTRUCT(BlueprintType)
+struct FSTUColors
+{
+    GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Color")
+    FLinearColor color;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Color")
+    FString name;
+};

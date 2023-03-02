@@ -209,6 +209,7 @@ private:
 	USTUGameInstance* STUGameInstance;
 
 	void SetSceneCharacterColor();
+	void BlockColorButton();
 
-	FLinearColor SelectedColor;
+	FSTUColors SelectedColor;
 };

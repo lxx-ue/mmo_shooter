@@ -142,9 +142,9 @@ void ASTUGameModeBase::CreateTeamsInfo() // распределяем ботов по командам
 }
 
 // оверрайд
-FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
+FSTUColors ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
 {
-    return FLinearColor::Red;
+    return FSTUColors{ FLinearColor::Red, TEXT("Red") };
 }
 
 void ASTUGameModeBase::SetPlayerColor(AController* Controller)

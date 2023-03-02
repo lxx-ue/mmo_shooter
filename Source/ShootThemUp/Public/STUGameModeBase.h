@@ -46,8 +46,8 @@ protected:
     int32 RoundsNum;
     int32 RoundTime;
     FString PlayersName;
-    FLinearColor PlayerTeamColor;
-    FLinearColor EnemyTeamColor;
+    FSTUColors PlayerTeamColor;
+    FSTUColors EnemyTeamColor;
     int32 RespawnTime = 5;
 
     ABotSpawner* FirstTeam;
@@ -72,7 +72,7 @@ private:
     ASTUGameHUD* defaultHUD;
 
     
-    virtual FLinearColor DetermineColorByTeamID(int32 TeamID) const;
+    virtual FSTUColors DetermineColorByTeamID(int32 TeamID) const;
 
     virtual void SpawnBots();
     void StartRound();

@@ -16,5 +16,5 @@ class SHOOTTHEMUP_API ASTUGameModeTeamDeathMatch : public ASTUGameModeBase
 	
 private:
 	virtual void CreateTeamsInfo() override;
-	virtual FLinearColor DetermineColorByTeamID(int32 TeamID) const override;
+	virtual FSTUColors DetermineColorByTeamID(int32 TeamID) const override;
 };

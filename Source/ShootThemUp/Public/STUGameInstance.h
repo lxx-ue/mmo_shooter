@@ -45,13 +45,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
 	int32 GetPlayersDeaths() const { return PlayersDeaths; }
 
-	void SetPlayerTeamColor(FLinearColor color) { PlayerTeamColor = color; }
+	void SetPlayerTeamColor(FSTUColors color) { PlayerTeamColor = color; }
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
-	FLinearColor GetPlayerTeamColor() const { return PlayerTeamColor; }
+		FSTUColors GetPlayerTeamColor() const { return PlayerTeamColor; }
 
-	void SetEnemyTeamColor(FLinearColor color) { EnemyTeamColor = color; }
+	void SetEnemyTeamColor(FSTUColors color) { EnemyTeamColor = color; }
 	UFUNCTION(BlueprintCallable, Category = "GameMode")
-	FLinearColor GetEnemyTeamColor() const { return EnemyTeamColor; }
+		FSTUColors GetEnemyTeamColor() const { return EnemyTeamColor; }
 
 	void ToggleVolume();
 
@@ -68,8 +68,8 @@ protected:
 		USoundClass* MasterSoundClass;
 
 private:
-	FLinearColor PlayerTeamColor = FLinearColor::Black;
-	FLinearColor EnemyTeamColor = FLinearColor::White;
+	FSTUColors PlayerTeamColor;
+	FSTUColors EnemyTeamColor;
 
 	FLevelData StartupLevel;
 	int32 RoundsNum = 1;

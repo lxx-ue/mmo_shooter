@@ -17,7 +17,7 @@ void ASTUGameModeTeamDeathMatch::CreateTeamsInfo() // распределяем ботов по кома
         const auto PlayerState = Cast<ASTUPlayerState>(Controller->PlayerState);
         if (!PlayerState) continue;
         PlayerState->SetTeamID(TeamID);
-        PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
+        PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID).color);
         PlayerState->SetPlayerName(Controller->IsPlayerController() ? PlayersName : Super::GetRandomBotName());
         PlayerState->SetIsPlayer(Controller->IsPlayerController());
         SetPlayerColor(Controller);
@@ -25,7 +25,7 @@ void ASTUGameModeTeamDeathMatch::CreateTeamsInfo() // распределяем ботов по кома
     }
 }
 
-FLinearColor ASTUGameModeTeamDeathMatch::DetermineColorByTeamID(int32 TeamID) const
+FSTUColors ASTUGameModeTeamDeathMatch::DetermineColorByTeamID(int32 TeamID) const
 {
     return TeamID == 1 ? PlayerTeamColor : EnemyTeamColor;
 }
