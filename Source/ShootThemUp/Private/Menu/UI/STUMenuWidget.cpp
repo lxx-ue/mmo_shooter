@@ -325,7 +325,38 @@ void USTUMenuWidget::BlockColorButton()
 {
 	FSTUColors blockedColor = isPlayerColorSelecting ? STUGameInstance->GetEnemyTeamColor() : STUGameInstance->GetPlayerTeamColor();
 	SelectedColor = isPlayerColorSelecting ? STUGameInstance->GetPlayerTeamColor() : STUGameInstance->GetEnemyTeamColor();
-	b_red_color->SetIsEnabled(false);
+	
+	b_red_color->SetIsEnabled(true);
+	b_blue_color->SetIsEnabled(true);
+	b_orange_color->SetIsEnabled(true);
+	b_green_color->SetIsEnabled(true);
+	b_cyan_color->SetIsEnabled(true);
+	b_yellow_color->SetIsEnabled(true);
+	b_purple_color->SetIsEnabled(true);
+	b_pink_color->SetIsEnabled(true);
+	b_black_color->SetIsEnabled(true);
+	b_white_color->SetIsEnabled(true);
+
+	if (blockedColor.name == "red")
+		b_red_color->SetIsEnabled(false);
+	if (blockedColor.name == "blue")
+		b_blue_color->SetIsEnabled(false);
+	if (blockedColor.name == "orange")
+		b_orange_color->SetIsEnabled(false);
+	if (blockedColor.name == "green")
+		b_green_color->SetIsEnabled(false);
+	if (blockedColor.name == "cyan")
+		b_cyan_color->SetIsEnabled(false);
+	if (blockedColor.name == "yellow")
+		b_yellow_color->SetIsEnabled(false);
+	if (blockedColor.name == "purple")
+		b_purple_color->SetIsEnabled(false);
+	if (blockedColor.name == "pink")
+		b_pink_color->SetIsEnabled(false);
+	if (blockedColor.name == "black")
+		b_black_color->SetIsEnabled(false);
+	if (blockedColor.name == "white")
+		b_white_color->SetIsEnabled(false);
 }
 
 void USTUMenuWidget::OnColorSelected()
